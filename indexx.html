@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>Shaurya RUNS Ludo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #080c16;
+      --bg-card: rgba(15, 23, 42, 0.85);
+      --bg-card-hover: rgba(23, 33, 58, 0.95);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-active: rgba(99, 102, 241, 0.5);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      
+      --red: #ef4444;
+      --red-glow: rgba(239, 68, 68, 0.4);
+      --red-bg: rgba(239, 68, 68, 0.12);
+      
+      --green: #10b981;
+      --green-glow: rgba(16, 185, 129, 0.4);
+      --green-bg: rgba(16, 185, 129, 0.12);
+      
+      --blue: #3b82f6;
+      --blue-glow: rgba(59, 130, 246, 0.4);
+      --blue-bg: rgba(59, 130, 246, 0.12);
+      
+      --yellow: #f59e0b;
+      --yellow-glow: rgba(245, 158, 11, 0.4);
+      --yellow-bg: rgba(245, 158, 11, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #172554 0%, #080c16 70%);
+      color: var(--text-main);
+      font-family: 'IBM Plex Mono', monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px 40px;
+    }
+
+    /* Top Navigation */
+    .navbar {
+      width: 100%;
+      max-width: 980px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff 30%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand .logo-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.7));
+      -webkit-text-fill-color: initial;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-color);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+    .badge-dot.connected { background: #10b981; box-shadow: 0 0 8px #10b981; }
+    .badge-dot.connecting { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .badge-dot.error { background: #ef4444; box-shadow: 0 0 8px #ef4444; }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 980px;
+    }
+
+    /* ================= LOGIN VIEW ================= */
+    #loginView {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 410px;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 34px 30px;
+      box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+      text-align: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .login-icon {
+      font-size: 3.2rem;
+      margin-bottom: 12px;
+      display: inline-block;
+      filter: drop-shadow(0 0 16px rgba(99, 102, 241, 0.5));
+    }
+
+    .login-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #fff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .login-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-input {
+      width: 100%;
+      background: rgba(8, 12, 22, 0.7);
+      border: 1.5px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--text-main);
+      padding: 11px 14px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s;
+      margin-top: 8px;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+      transform: translateY(-1px);
+    }
+    .btn-primary:active {
+      transform: scale(0.98);
+    }
+
+    .login-error {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+      font-size: 0.85rem;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    /* ================= DASHBOARD VIEW ================= */
+    #dashboardView {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* Settings card (Database URL) */
+    .settings-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+    .settings-bar label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .settings-input {
+      flex: 1;
+      min-width: 220px;
+      background: rgba(8, 12, 22, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #cbd5e1;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      padding: 8px 12px;
+      outline: none;
+    }
+    .settings-input:focus { border-color: var(--accent); }
+
+    /* Main Grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 860px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Matches Sidebar */
+    .matches-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .manual-connect-box {
+      display: flex;
+      gap: 8px;
+    }
+    .match-num-input {
+      flex: 1;
+      background: rgba(8, 12, 22, 0.7);
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      color: #facc15;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+      padding: 8px 12px;
+      letter-spacing: 2px;
+      text-align: center;
+      outline: none;
+    }
+    .match-num-input:focus { border-color: #facc15; }
+
+    .btn-connect {
+      background: #4338ca;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+    .btn-connect:hover { background: #4f46e5; }
+
+    .matches-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .match-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 12px;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .match-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--border-active);
+    }
+    .match-card.active-selected {
+      background: rgba(99, 102, 241, 0.18);
+      border-color: var(--accent);
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+    }
+
+    .match-card-content {
+      flex: 1;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .match-item-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #facc15;
+    }
+
+    .match-item-time {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .match-player-dots {
+      display: flex;
+      gap: 4px;
+      margin-top: 2px;
+    }
+    .p-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+    }
+    .p-dot.red { background: var(--red); }
+    .p-dot.green { background: var(--green); }
+    .p-dot.blue { background: var(--blue); }
+    .p-dot.yellow { background: var(--yellow); }
+
+    .btn-delete-match {
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      color: #f87171;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-delete-match:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .no-matches {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      padding: 24px 10px;
+    }
+
+    /* Controller Area */
+    .control-area {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .control-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .current-match-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .match-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .match-highlight {
+      color: #facc15;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    /* Player Cards */
+    .colors-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .color-panel {
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .color-panel.red { background: #ff1744; border: 3px solid #111; color:#111; }
+    .color-panel.green { background: #00e676; border: 3px solid #111; color:#111; }
+    .color-panel.blue { background: #2979ff; border: 3px solid #111; color:#111; }
+    .color-panel.yellow { background: #ffea00; border: 3px solid #111; color:#111; }
+
+    .color-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .color-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .color-panel.red .color-title { color: #f87171; }
+    .color-panel.green .color-title { color: #4ade80; }
+    .color-panel.blue .color-title { color: #60a5fa; }
+    .color-panel.yellow .color-title { color: #fde047; }
+
+    .current-override-tag {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.35);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .dice-buttons-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    .dice-btn {
+      aspect-ratio: 1;
+      border-radius: 10px;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      opacity: 0.55;
+    }
+    .dice-btn:hover {
+      opacity: 0.95;
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .dice-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Active Dice Selection */
+    .color-panel.red .dice-btn.active {
+      background: var(--red);
+      border-color: #fff;
+      color: #fff;
+      opacity: 1;
+      transform: scale(1.12);
+      box-shadow: 0 0 16px var(--red-glow);
+    }
+    .color-panel.green .dice-btn.active {
+      background: var(--green);
+      border-color: #fff;
+      color: #fff;
+      opacity: 1;
+      transform: scale(1.12);
+      box-shadow: 0 0 16px var(--green-glow);
+    }
+    .color-panel.blue .dice-btn.active {
+      background: var(--blue);
+      border-color: #fff;
+      color: #fff;
+      opacity: 1;
+      transform: scale(1.12);
+      box-shadow: 0 0 16px var(--blue-glow);
+    }
+    .color-panel.yellow .dice-btn.active {
+      background: var(--yellow);
+      border-color: #fff;
+      color: #111;
+      opacity: 1;
+      transform: scale(1.12);
+      box-shadow: 0 0 16px var(--yellow-glow);
+    }
+
+    .dice-btn.rand-btn {
+      font-size: 1.25rem;
+    }
+    .dice-btn.rand-btn.active {
+      background: #334155 !important;
+      border-color: #94a3b8 !important;
+      color: #fff !important;
+      opacity: 1 !important;
+      transform: scale(1.05);
+    }
+
+    /* Activity Feed / Log */
+    .activity-log {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.74rem;
+      color: #94a3b8;
+      max-height: 90px;
+      overflow-y: auto;
+    }
+    .log-item {
+      margin-bottom: 4px;
+    }
+    .log-item:last-child { margin-bottom: 0; }
+    .log-time { color: #64748b; }
+    .log-success { color: #34d399; }
+    .log-warn { color: #facc15; }
+
+    /* ================= USER MANAGEMENT VIEW (SUPER ADMIN) ================= */
+    #userMgmtSection {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 22px;
+      display: none;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .user-create-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 12px;
+      background: rgba(0,0,0,0.25);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      align-items: flex-end;
+    }
+    @media (max-width: 640px) {
+      .user-create-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .users-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .users-table th, .users-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .users-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .status-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .status-pill.active { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .status-pill.revoked { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  
+    /* POP / NEO-BRUTALIST THEME */
+    :root{--bg-main:#f4e7d3;--bg-card:#fff8ed;--bg-card-hover:#ffe8c7;--border-color:#171717;--border-active:#171717;--text-main:#171717;--text-muted:#4b4037;--accent:#ff4d6d;--accent-hover:#ff3156}
+    body{background:#f4e7d3;color:#171717;padding:0 18px 48px}
+    .navbar{max-width:1100px;border-bottom:3px solid #171717;margin-bottom:28px}
+    .brand{color:#171717;background:none;-webkit-text-fill-color:initial;font-size:1.45rem;letter-spacing:-.04em}
+    .brand .logo-icon{filter:none}
+    .badge{border:2px solid #171717;border-radius:0;background:#fff8ed;color:#171717;box-shadow:3px 3px 0 #171717}
+    .btn-secondary,.btn-danger,.btn-connect,.btn-primary{border:2px solid #171717;border-radius:0;box-shadow:4px 4px 0 #171717}
+    .btn-secondary{background:#fff8ed;color:#171717}.btn-danger{background:#ff8fab;color:#171717;border-color:#171717}.btn-connect{background:#70e1c1;color:#171717}
+    .btn-secondary:hover,.btn-danger:hover,.btn-connect:hover{background:#ffe35b;transform:translate(2px,2px);box-shadow:2px 2px 0 #171717}
+    .btn-primary{background:#ff4d6d;color:#fff;border:2px solid #171717;box-shadow:5px 5px 0 #171717}.btn-primary:hover{background:#ff3156;transform:translate(2px,2px);box-shadow:3px 3px 0 #171717}
+    #loginView,.settings-bar,.matches-panel,.control-area,#userMgmtSection{background:#fff8ed;border:3px solid #171717;border-radius:0;box-shadow:6px 6px 0 #171717;backdrop-filter:none}
+    #loginView{max-width:440px;padding:38px 32px}.login-icon{filter:none}.login-title{color:#171717;background:none;-webkit-text-fill-color:initial;font-size:2rem;text-transform:uppercase;letter-spacing:-.06em}.login-desc{color:#4b4037}
+    .form-label{color:#171717;font-weight:800;text-transform:uppercase;font-size:.72rem;letter-spacing:.08em}
+    .form-input,.settings-input,.match-num-input{background:#fff;color:#171717;border:2px solid #171717;border-radius:0;box-shadow:3px 3px 0 #171717}.form-input:focus,.settings-input:focus,.match-num-input:focus{border-color:#171717;box-shadow:5px 5px 0 #171717}
+    .login-error{border:2px solid #171717;border-radius:0;background:#ff8fab;color:#171717}.settings-bar{padding:14px 18px}.dashboard-grid{gap:24px}.matches-panel,.control-area,#userMgmtSection{padding:20px}
+    .section-title,.match-title{font-weight:900;text-transform:uppercase;letter-spacing:-.03em}.match-card{background:#fff;border:2px solid #171717;border-radius:0;box-shadow:3px 3px 0 #171717}.match-card:hover{background:#ffe35b;border-color:#171717}.match-card.active-selected{background:#70e1c1;border-color:#171717;box-shadow:5px 5px 0 #171717}.match-item-number{color:#171717}
+    .color-panel{border:3px solid #171717!important;border-radius:0;box-shadow:5px 5px 0 #171717}.color-panel.red{background:#ff8fab}.color-panel.green{background:#70e1c1}.color-panel.blue{background:#82b1ff}.color-panel.yellow{background:#ffe35b}.color-panel.red .color-title,.color-panel.green .color-title,.color-panel.blue .color-title,.color-panel.yellow .color-title{color:#171717}
+    .current-override-tag{border:2px solid #171717;border-radius:0;background:#fff8ed;color:#171717}.dice-btn{border:2px solid #171717;border-radius:0;background:#fff8ed;color:#171717;box-shadow:3px 3px 0 #171717}.dice-btn:hover{background:#fff;transform:translate(2px,2px);box-shadow:1px 1px 0 #171717}
+    .color-panel.red .dice-btn.active,.color-panel.green .dice-btn.active,.color-panel.blue .dice-btn.active,.color-panel.yellow .dice-btn.active{background:#171717;border-color:#171717;color:#fff;box-shadow:4px 4px 0 #fff}
+    .activity-log{background:#171717;border:3px solid #171717;border-radius:0;color:#fff8ed}.log-time{color:#ffe35b}.log-success{color:#70e1c1}.users-table th,.users-table td{border-bottom:2px solid #171717}.user-create-form{background:#ffe8c7;border:2px solid #171717;border-radius:0}.status-pill{border:2px solid #171717;border-radius:0}.status-pill.active{background:#70e1c1;color:#171717;border-color:#171717}.status-pill.revoked{background:#ff8fab;color:#171717;border-color:#171717}
+
+.color-panel{border-radius:0;box-shadow:7px 7px 0 #111;}
+.color-panel .dice-btn{border-radius:0;border:2px solid #111;color:#111;font-family:'DM Mono',monospace;font-weight:700;box-shadow:3px 3px 0 #111;}
+.color-panel.red .dice-btn.active{background:#ff1744;border-color:#111;color:#fff;box-shadow:4px 4px 0 #111;}
+.color-panel.green .dice-btn.active{background:#00e676;border-color:#111;color:#111;box-shadow:4px 4px 0 #111;}
+.color-panel.blue .dice-btn.active{background:#2979ff;border-color:#111;color:#fff;box-shadow:4px 4px 0 #111;}
+.color-panel.yellow .dice-btn.active{background:#ffea00;border-color:#111;color:#111;box-shadow:4px 4px 0 #111;}
+.color-panel .current-override-tag{background:#111;color:#fff;border-radius:0;}
+
+    /* ===== REFERENCE-INSPIRED SATURATED BRUTALIST TERMINAL THEME ===== */
+    :root {
+      --ink: #111111;
+      --paper: #f5f0e7;
+      --terminal-green: #00ff66;
+      --red-sat: #ff1744;
+      --green-sat: #00e676;
+      --blue-sat: #2979ff;
+      --yellow-sat: #ffea00;
+    }
+
+    body {
+      background: var(--paper) !important;
+      color: var(--ink) !important;
+      font-family: 'IBM Plex Mono', monospace !important;
+    }
+
+    .brand, .login-title, .section-title, .match-title,
+    .color-title, .form-label, .btn-primary, .btn-secondary,
+    .btn-danger, .btn-connect, .badge, button, input, table {
+      font-family: 'IBM Plex Mono', monospace !important;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .login-title {
+      font-family: 'Archivo Black', sans-serif !important;
+      letter-spacing: -0.045em;
+      color: #111 !important;
+      -webkit-text-fill-color: #111 !important;
+      background: none !important;
+    }
+
+    .navbar {
+      border-bottom: 3px solid var(--ink) !important;
+    }
+
+    .btn-secondary, .btn-danger, .btn-connect, .btn-primary,
+    .badge, .settings-bar, .matches-panel, .control-area,
+    #loginView, #userMgmtSection, .match-card, .form-input,
+    .settings-input, .manual-connect-box, .user-create-form,
+    .status-pill {
+      border-radius: 0 !important;
+      box-shadow: 4px 4px 0 var(--ink) !important;
+    }
+
+    .btn-secondary, .btn-danger, .btn-connect, .btn-primary {
+      border: 2px solid var(--ink) !important;
+      background: #fff !important;
+      color: var(--ink) !important;
+    }
+
+    .btn-primary {
+      background: var(--terminal-green) !important;
+    }
+
+    .badge {
+      border: 2px solid var(--ink) !important;
+      background: #fff !important;
+      color: var(--ink) !important;
+    }
+
+    .dashboard-grid { gap: 18px !important; }
+
+    /* Saturated player blocks */
+    .color-panel {
+      border: 3px solid var(--ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 6px 6px 0 var(--ink) !important;
+      color: var(--ink) !important;
+    }
+    .color-panel.red { background: var(--red-sat) !important; }
+    .color-panel.green { background: var(--green-sat) !important; }
+    .color-panel.blue { background: var(--blue-sat) !important; }
+    .color-panel.yellow { background: var(--yellow-sat) !important; }
+
+    .color-panel.red .color-title,
+    .color-panel.green .color-title,
+    .color-panel.blue .color-title,
+    .color-panel.yellow .color-title { color: var(--ink) !important; }
+
+    .current-override-tag {
+      background: var(--ink) !important;
+      color: #fff !important;
+      border: 2px solid var(--ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 3px 3px 0 rgba(255,255,255,.85) !important;
+    }
+
+    .color-panel .dice-btn {
+      background: rgba(255,255,255,.72) !important;
+      border: 3px solid var(--ink) !important;
+      color: var(--ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 4px 4px 0 var(--ink) !important;
+    }
+    .color-panel .dice-btn:hover {
+      background: #fff !important;
+      transform: translate(-1px,-1px) !important;
+      box-shadow: 6px 6px 0 var(--ink) !important;
+    }
+    .color-panel .dice-btn:active {
+      transform: translate(3px,3px) !important;
+      box-shadow: 1px 1px 0 var(--ink) !important;
+    }
+    .color-panel.red .dice-btn.active { background: #ff5c7a !important; }
+    .color-panel.green .dice-btn.active { background: #65ffae !important; }
+    .color-panel.blue .dice-btn.active { background: #72a6ff !important; }
+    .color-panel.yellow .dice-btn.active { background: #fff57a !important; }
+
+    .dice-btn.rand-btn.active {
+      background: var(--ink) !important;
+      color: #fff !important;
+      border-color: var(--ink) !important;
+      box-shadow: 4px 4px 0 #fff !important;
+    }
+
+    /* Small brutalist green + black terminal */
+    .activity-log {
+      background: #090b09 !important;
+      color: var(--terminal-green) !important;
+      border: 3px solid var(--ink) !important;
+      border-radius: 0 !important;
+      box-shadow: 5px 5px 0 var(--terminal-green) !important;
+      font-family: 'IBM Plex Mono', monospace !important;
+      font-size: .70rem !important;
+      line-height: 1.45 !important;
+      max-height: 72px !important;
+      padding: 8px 11px !important;
+      position: relative;
+    }
+    .activity-log::before {
+      content: '> TERMINAL / REALTIME';
+      display: block;
+      color: #090b09;
+      background: var(--terminal-green);
+      font-weight: 700;
+      font-size: .62rem;
+      padding: 2px 6px;
+      margin: -8px -11px 7px;
+      letter-spacing: .04em;
+    }
+    .activity-log .log-time { color: #7affad !important; }
+    .activity-log .log-success { color: var(--terminal-green) !important; }
+    .activity-log .log-warn { color: #fff !important; }
+
+    .settings-bar {
+      background: #d9ffe8 !important;
+      border: 3px solid var(--ink) !important;
+    }
+    .settings-input, .form-input, .match-num-input {
+      border: 3px solid var(--ink) !important;
+      border-radius: 0 !important;
+      background: #fff !important;
+      color: var(--ink) !important;
+      box-shadow: 3px 3px 0 var(--ink) !important;
+    }
+
+    .matches-panel, .control-area, #userMgmtSection, #loginView {
+      background: #fffaf1 !important;
+      border: 3px solid var(--ink) !important;
+    }
+
+    .match-card {
+      background: #fff !important;
+      border: 2px solid var(--ink) !important;
+    }
+    .match-card.active-selected {
+      background: var(--terminal-green) !important;
+      border-color: var(--ink) !important;
+      box-shadow: 5px 5px 0 var(--ink) !important;
+    }
+
+    .p-dot.red { background: var(--red-sat) !important; }
+    .p-dot.green { background: var(--green-sat) !important; }
+    .p-dot.blue { background: var(--blue-sat) !important; }
+    .p-dot.yellow { background: var(--yellow-sat) !important; }
+
+    .section-title { font-weight: 800 !important; }
+    .match-highlight, .match-item-number { color: var(--ink) !important; }
+
+  
+/* =========================================================
+   MOBILE-FIRST / TOUCH RESPONSIVE PASS
+   ========================================================= */
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+button,
+input,
+select {
+  min-height: 44px;
+}
+
+.navbar {
+  width: 100%;
+  padding: 12px 0;
+  gap: 10px;
+}
+
+.brand {
+  min-width: 0;
+  font-size: clamp(1rem, 5vw, 1.35rem);
+}
+
+.brand span:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-actions {
+  width: 100%;
+  gap: 7px;
+}
+
+.nav-actions .badge {
+  flex: 1 1 auto;
+  min-width: 0;
+  justify-content: center;
+}
+
+.nav-actions button {
+  flex: 1 1 auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 980px;
+}
+
+#loginView {
+  width: min(100%, 430px);
+  margin-top: 24px;
+  padding: 26px 18px;
+  border-width: 3px;
+  box-shadow: 7px 7px 0 #111;
+}
+
+.settings-bar {
+  width: 100%;
+  padding: 12px;
+  border-width: 3px;
+  box-shadow: 5px 5px 0 #111;
+}
+
+.settings-bar label {
+  width: 100%;
+}
+
+.settings-input {
+  min-width: 0;
+  width: 100%;
+  flex: 1 1 100%;
+}
+
+.settings-bar .btn-secondary {
+  width: 100%;
+}
+
+.dashboard-grid {
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.matches-panel,
+.control-area,
+#userMgmtSection {
+  border-width: 3px;
+  border-radius: 0;
+  box-shadow: 6px 6px 0 #111;
+}
+
+.matches-panel {
+  padding: 13px;
+}
+
+.control-area {
+  padding: 14px;
+}
+
+.control-header {
+  align-items: stretch;
+}
+
+.current-match-display {
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.match-title {
+  font-size: .9rem;
+}
+
+.match-highlight {
+  font-size: 1.15rem;
+}
+
+.quick-actions {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.quick-actions button {
+  width: 100%;
+}
+
+.manual-connect-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.match-num-input {
+  min-width: 0;
+}
+
+.matches-list {
+  max-height: 300px;
+}
+
+.match-card {
+  border-width: 2px;
+  border-radius: 0;
+  box-shadow: 3px 3px 0 #111;
+  min-height: 60px;
+}
+
+.color-panel {
+  width: 100%;
+  padding: 12px;
+  box-shadow: 5px 5px 0 #111;
+  border-width: 3px;
+}
+
+.color-panel-header {
+  gap: 8px;
+}
+
+.color-title {
+  font-size: .92rem;
+}
+
+.current-override-tag {
+  font-size: .67rem;
+  padding: 4px 7px;
+  white-space: nowrap;
+}
+
+.dice-buttons-row {
+  /*
+   * Seven controls always fit without horizontal scrolling.
+   * The Random control remains the final, larger control.
+   */
+  grid-template-columns: repeat(6, minmax(0, 1fr)) minmax(52px, .9fr);
+  gap: 7px;
+}
+
+.dice-btn {
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1 / .82;
+  border-width: 2px;
+  border-radius: 0;
+  font-size: clamp(.9rem, 5vw, 1.15rem);
+  box-shadow: 3px 3px 0 #111;
+}
+
+.dice-btn.rand-btn {
+  font-size: 1.05rem;
+}
+
+.color-panel .dice-btn:hover {
+  transform: none;
+}
+
+.color-panel .dice-btn:active {
+  transform: translate(2px, 2px);
+}
+
+.activity-log {
+  border: 3px solid #111;
+  border-radius: 0;
+  box-shadow: 4px 4px 0 #111;
+  max-height: 150px;
+  overflow-x: auto;
+  white-space: normal;
+  word-break: break-word;
+  font-size: .68rem;
+  padding: 10px;
+}
+
+.user-create-form {
+  grid-template-columns: 1fr;
+}
+
+.users-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.users-table th,
+.users-table td {
+  padding: 9px 10px;
+}
+
+.btn-secondary,
+.btn-danger,
+.btn-connect,
+.btn-primary {
+  border-radius: 0;
+  min-height: 44px;
+}
+
+/* Small phones */
+@media (max-width: 420px) {
+  body {
+    padding: 0 7px 28px;
+  }
+
+  .navbar {
+    padding-top: 9px;
+  }
+
+  .brand {
+    width: 100%;
+    justify-content: center;
+    font-size: 1.05rem;
+  }
+
+  .nav-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .nav-actions .badge:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .dashboard-grid {
+    gap: 11px;
+  }
+
+  .matches-panel,
+  .control-area,
+  #userMgmtSection {
+    box-shadow: 4px 4px 0 #111;
+  }
+
+  .control-area {
+    padding: 10px;
+  }
+
+  .color-panel {
+    padding: 9px;
+    box-shadow: 4px 4px 0 #111;
+  }
+
+  .dice-buttons-row {
+    gap: 4px;
+    grid-template-columns: repeat(6, minmax(0, 1fr)) minmax(45px, .9fr);
+  }
+
+  .dice-btn {
+    min-height: 42px;
+    box-shadow: 2px 2px 0 #111;
+    font-size: .9rem;
+  }
+
+  .dice-btn.rand-btn {
+    font-size: .85rem;
+  }
+
+  .current-override-tag {
+    font-size: .58rem;
+  }
+
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .match-card {
+    padding: 9px;
+  }
+}
+
+/* Ultra-small phones: keep controls usable rather than cramped */
+@media (max-width: 350px) {
+  .dice-buttons-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(48px, .95fr);
+  }
+
+  .dice-btn {
+    aspect-ratio: 1.55 / 1;
+  }
+
+  .color-panel-header {
+    align-items: flex-start;
+  }
+
+  .current-override-tag {
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Landscape phones */
+@media (max-height: 520px) and (orientation: landscape) {
+  #loginView {
+    margin-top: 10px;
+  }
+
+  .matches-list {
+    max-height: 190px;
+  }
+
+  .activity-log {
+    max-height: 100px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="navbar">
+    <div class="brand">
+      <span class="logo-icon">👑</span>
+      <span>Shaurya RUNS Ludo</span>
+    </div>
+    <div class="nav-actions">
+      <div class="badge" id="firebaseBadge">
+        <span class="badge-dot" id="badgeDot"></span>
+        <span id="badgeText">Checking DB</span>
+      </div>
+      <div class="badge" id="roleBadge" style="display: none; background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.35); color: #c7d2fe;">
+        <span id="roleText">Role</span>
+      </div>
+      <button class="btn-secondary" id="userMgmtNavBtn" style="display: none;" onclick="toggleUserMgmt()">👥 Issue IDs</button>
+      <button class="btn-secondary" id="logoutBtn" style="display: none;" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- ================= LOGIN SCREEN ================= -->
+  <div id="loginView">
+    <div class="login-icon">👑</div>
+    <h2 class="login-title">Shaurya RUNS Ludo</h2>
+    <p class="login-desc">Sign in with Super Admin or Controller ID</p>
+
+    <div class="login-error" id="loginError">
+      Incorrect username or password.
+    </div>
+
+    <form onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="usernameInput">User ID / Username</label>
+        <input class="form-input" id="usernameInput" type="text" placeholder="admin or controller ID" autocomplete="username" required/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="passwordInput">Password</label>
+        <input class="form-input" id="passwordInput" type="password" placeholder="••••••••" autocomplete="current-password" required/>
+      </div>
+      <button class="btn-primary" type="submit">Sign In</button>
+    </form>
+  </div>
+
+  <!-- ================= DASHBOARD SCREEN ================= -->
+  <div class="container" id="dashboardView">
+
+    <!-- Firebase Config Bar -->
+    <div class="settings-bar">
+      <label>Firebase RTDB URL:</label>
+      <input class="settings-input" id="dbUrlInput" type="text" placeholder="https://your-project-default-rtdb.firebaseio.com"/>
+      <button class="btn-secondary" onclick="saveDbUrl()">Save & Connect</button>
+    </div>
+
+    <!-- ================= SUPER ADMIN USER MANAGEMENT SECTION ================= -->
+    <div id="userMgmtSection">
+      <div class="section-title">
+        <span>👥 Controller ID Management</span>
+        <button class="btn-secondary" onclick="toggleUserMgmt()">✕ Close Section</button>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">Create, issue, and revoke controller logins. Controller accounts can only control dice and cannot access ID management.</p>
+
+      <!-- Create New Controller Form -->
+      <form class="user-create-form" onsubmit="handleCreateUser(event)">
+        <div>
+          <label class="form-label">New Controller ID (Username)</label>
+          <input class="form-input" id="newUserId" type="text" placeholder="e.g. shaurya1" required/>
+        </div>
+        <div>
+          <label class="form-label">Password</label>
+          <input class="form-input" id="newUserPass" type="text" placeholder="e.g. dicepass123" required/>
+        </div>
+        <button class="btn-primary" type="submit" style="margin: 0; padding: 11px 20px;">+ Issue ID</button>
+      </form>
+
+      <!-- Issued IDs Table -->
+      <div>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Username</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="usersTableBody">
+            <tr>
+              <td colspan="4" style="text-align: center; color: var(--text-muted);">No issued controller IDs yet. Create one above!</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Main Grid: Matches + Dice Controller -->
+    <div class="dashboard-grid" id="mainDashboardGrid">
+
+      <!-- Left Sidebar: Matches Monitor -->
+      <div class="matches-panel">
+        <div class="section-title">
+          <span>⚡ Live Matches</span>
+          <div style="display:flex; gap:6px;">
+            <button class="btn-danger" style="padding: 3px 8px; font-size: 0.72rem;" onclick="cleanAllInactiveMatches()" title="Delete glitched or ended games">🧹 Clear Glitched</button>
+            <span class="badge" id="matchCountBadge">0 active</span>
+          </div>
+        </div>
+
+        <!-- Manual Match # Input -->
+        <div>
+          <label class="form-label">Enter Game Match #</label>
+          <div class="manual-connect-box">
+            <input class="match-num-input" id="manualMatchInput" type="text" maxlength="6" placeholder="8198"/>
+            <button class="btn-connect" onclick="selectManualMatch()">Go</button>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top: 4px;">
+          <span>Active Game Sessions</span>
+        </div>
+
+        <!-- Dynamic Matches List -->
+        <div class="matches-list" id="matchesList">
+          <div class="no-matches">No active matches found.<br>Start a match in Ludo King to see it here!</div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dice Override Controller -->
+      <div class="control-area">
+        <div class="control-header">
+          <div class="current-match-display">
+            <span class="match-title">Match:</span>
+            <span class="match-highlight" id="activeMatchLabel">#----</span>
+            <span class="badge" id="matchLiveBadge" style="display:none; background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);">● LIVE</span>
+          </div>
+
+          <div class="quick-actions">
+            <button class="btn-secondary" onclick="resetAllToRandom()">🎲 All Random</button>
+            <button class="btn-secondary" onclick="setAllDice(6)">⭐ All Sixes</button>
+          </div>
+        </div>
+
+        <!-- Color Rows Grid -->
+        <div class="colors-grid">
+          
+          <!-- RED PLAYER -->
+          <div class="color-panel red" id="panel-red">
+            <div class="color-panel-header">
+              <span class="color-title">🔴 Red Player</span>
+              <span class="current-override-tag" id="tag-red">RANDOM</span>
+            </div>
+            <div class="dice-buttons-row" id="row-red"></div>
+          </div>
+
+          <!-- GREEN PLAYER -->
+          <div class="color-panel green" id="panel-green">
+            <div class="color-panel-header">
+              <span class="color-title">🟢 Green Player</span>
+              <span class="current-override-tag" id="tag-green">RANDOM</span>
+            </div>
+            <div class="dice-buttons-row" id="row-green"></div>
+          </div>
+
+          <!-- BLUE PLAYER -->
+          <div class="color-panel blue" id="panel-blue">
+            <div class="color-panel-header">
+              <span class="color-title">🔵 Blue Player</span>
+              <span class="current-override-tag" id="tag-blue">RANDOM</span>
+            </div>
+            <div class="dice-buttons-row" id="row-blue"></div>
+          </div>
+
+          <!-- YELLOW PLAYER -->
+          <div class="color-panel yellow" id="panel-yellow">
+            <div class="color-panel-header">
+              <span class="color-title">🟡 Yellow Player</span>
+              <span class="current-override-tag" id="tag-yellow">RANDOM</span>
+            </div>
+            <div class="dice-buttons-row" id="row-yellow"></div>
+          </div>
+
+        </div>
+
+        <!-- Activity Log -->
+        <div>
+          <label class="form-label">Realtime Activity (Auto-resets to Random on roll):</label>
+          <div class="activity-log" id="activityLog">
+            <div class="log-item"><span class="log-time">[Ready]</span> Select a match to monitor and control dice.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Firebase Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getDatabase, ref, set, remove, onValue, get } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-database.js";
+
+    // Application Constants & State
+    const AUTH_USER_KEY = "shaurya_ludo_user";
+    const AUTH_ROLE_KEY = "shaurya_ludo_role";
+    const DB_STORAGE_KEY = "ludo_firebase_url";
+    const colors = ["red", "green", "blue", "yellow"];
+
+    let currentUser = null;
+    let currentRole = null;
+    let currentMatchNumber = null;
+    let db = null;
+    let matchesCache = {};
+    let localOverrides = { red: 0, green: 0, blue: 0, yellow: 0 };
+
+    // --- Authentication ---
+    function checkAuth() {
+      const storedUser = sessionStorage.getItem(AUTH_USER_KEY);
+      const storedRole = sessionStorage.getItem(AUTH_ROLE_KEY);
+
+      if (storedUser && storedRole) {
+        currentUser = storedUser;
+        currentRole = storedRole;
+
+        document.getElementById("loginView").style.display = "none";
+        document.getElementById("dashboardView").style.display = "flex";
+        document.getElementById("logoutBtn").style.display = "inline-flex";
+
+        const roleBadge = document.getElementById("roleBadge");
+        const roleText = document.getElementById("roleText");
+        roleBadge.style.display = "inline-flex";
+        roleText.textContent = (currentRole === "superadmin") ? "👑 Super Admin" : `🎮 Controller: ${currentUser}`;
+
+        // Super Admin gets ID management button
+        if (currentRole === "superadmin") {
+          document.getElementById("userMgmtNavBtn").style.display = "inline-flex";
+        } else {
+          document.getElementById("userMgmtNavBtn").style.display = "none";
+          document.getElementById("userMgmtSection").style.display = "none";
+        }
+
+        initDashboard();
+      } else {
+        document.getElementById("loginView").style.display = "block";
+        document.getElementById("dashboardView").style.display = "none";
+        document.getElementById("logoutBtn").style.display = "none";
+        document.getElementById("roleBadge").style.display = "none";
+        document.getElementById("userMgmtNavBtn").style.display = "none";
+      }
+    }
+
+    window.handleLogin = async function(e) {
+      e.preventDefault();
+      const user = document.getElementById("usernameInput").value.trim();
+      const pass = document.getElementById("passwordInput").value.trim();
+      const errorEl = document.getElementById("loginError");
+      errorEl.style.display = "none";
+
+      // 1. Check Super Admin hardcoded credentials
+      if (user === "admin" && pass === "admin4ludo") {
+        sessionStorage.setItem(AUTH_USER_KEY, "admin");
+        sessionStorage.setItem(AUTH_ROLE_KEY, "superadmin");
+        checkAuth();
+        return;
+      }
+
+      // 2. Check Controller credentials against Firebase
+      ensureDb();
+      if (!db) {
+        errorEl.textContent = "Connecting to database... please try again in a second.";
+        errorEl.style.display = "block";
+        return;
+      }
+
+      try {
+        const userSnap = await get(ref(db, `ludo_admin/users/${user}`));
+        if (!userSnap.exists()) {
+          errorEl.textContent = "Invalid User ID or Password.";
+          errorEl.style.display = "block";
+          return;
+        }
+
+        const userData = userSnap.val();
+        if (userData.password !== pass) {
+          errorEl.textContent = "Invalid User ID or Password.";
+          errorEl.style.display = "block";
+          return;
+        }
+
+        if (userData.status === "revoked") {
+          errorEl.textContent = "⛔ This ID has been revoked by Super Admin.";
+          errorEl.style.display = "block";
+          return;
+        }
+
+        // Login as Controller
+        sessionStorage.setItem(AUTH_USER_KEY, user);
+        sessionStorage.setItem(AUTH_ROLE_KEY, "controller");
+        checkAuth();
+
+      } catch (err) {
+        errorEl.textContent = "Authentication error: " + err.message;
+        errorEl.style.display = "block";
+      }
+    };
+
+    window.logout = function() {
+      sessionStorage.removeItem(AUTH_USER_KEY);
+      sessionStorage.removeItem(AUTH_ROLE_KEY);
+      currentUser = null;
+      currentRole = null;
+      checkAuth();
+    };
+
+    // --- Super Admin User Management ---
+    window.toggleUserMgmt = function() {
+      const sec = document.getElementById("userMgmtSection");
+      const isVisible = sec.style.display === "flex";
+      sec.style.display = isVisible ? "none" : "flex";
+      if (!isVisible) {
+        loadUsersList();
+      }
+    };
+
+    window.handleCreateUser = async function(e) {
+      e.preventDefault();
+      if (currentRole !== "superadmin") return;
+      const idInput = document.getElementById("newUserId");
+      const passInput = document.getElementById("newUserPass");
+      const userId = idInput.value.trim().toLowerCase();
+      const password = passInput.value.trim();
+
+      if (!userId || !password) return;
+      if (userId === "admin") {
+        alert("Cannot use reserved name 'admin'");
+        return;
+      }
+
+      ensureDb();
+      if (!db) {
+        alert("Firebase not connected yet.");
+        return;
+      }
+
+      try {
+        await set(ref(db, `ludo_admin/users/${userId}`), {
+          username: userId,
+          password: password,
+          role: "controller",
+          status: "active",
+          createdAt: Date.now()
+        });
+        idInput.value = "";
+        passInput.value = "";
+        logActivity(`Super Admin issued new Controller ID: [${userId}]`, true);
+        loadUsersList();
+      } catch (err) {
+        alert("Failed to issue ID: " + err.message);
+      }
+    };
+
+    function loadUsersList() {
+      ensureDb();
+      if (!db) return;
+      onValue(ref(db, "ludo_admin/users"), snapshot => {
+        const users = snapshot.val() || {};
+        const tbody = document.getElementById("usersTableBody");
+        const userKeys = Object.keys(users);
+
+        if (userKeys.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">No issued controller IDs yet. Create one above!</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = "";
+        userKeys.forEach(k => {
+          const u = users[k];
+          const tr = document.createElement("tr");
+          const isActive = u.status !== "revoked";
+
+          tr.innerHTML = `
+            <td><strong>${u.username}</strong><br><span style="font-size:0.75rem; color:#64748b;">Pass: ${u.password}</span></td>
+            <td><span class="badge">🎮 Controller</span></td>
+            <td><span class="status-pill ${isActive ? 'active' : 'revoked'}">${isActive ? 'Active' : 'Revoked'}</span></td>
+            <td>
+              <button class="btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="toggleUserStatus('${k}', '${isActive ? 'revoked' : 'active'}')">
+                ${isActive ? '🚫 Revoke' : '✅ Activate'}
+              </button>
+              <button class="btn-danger" style="padding: 4px 8px; font-size: 0.75rem; margin-left: 4px;" onclick="deleteUser('${k}')">
+                🗑️ Delete
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      });
+    }
+
+    window.toggleUserStatus = async function(userId, newStatus) {
+      if (currentRole !== "superadmin") return;
+      ensureDb();
+      if (!db) return;
+      await set(ref(db, `ludo_admin/users/${userId}/status`), newStatus);
+      logActivity(`Controller ID [${userId}] is now ${newStatus.toUpperCase()}`);
+    };
+
+    window.deleteUser = async function(userId) {
+      if (currentRole !== "superadmin") return;
+      if (!confirm(`Permanently delete Controller ID [${userId}]?`)) return;
+      ensureDb();
+      if (!db) return;
+      await remove(ref(db, `ludo_admin/users/${userId}`));
+      logActivity(`Deleted Controller ID [${userId}]`);
+    };
+
+    // --- Firebase Setup ---
+    function getDefaultDbUrl() {
+      const stored = localStorage.getItem(DB_STORAGE_KEY);
+      if (stored) return stored;
+      return "https://ludo-remote-control-default-rtdb.firebaseio.com";
+    }
+
+    window.saveDbUrl = function() {
+      const val = document.getElementById("dbUrlInput").value.trim();
+      if (val) {
+        localStorage.setItem(DB_STORAGE_KEY, val);
+        logActivity(`Saved Database URL: ${val}`);
+        connectFirebase(val);
+      }
+    };
+
+    function ensureDb() {
+      if (!db) {
+        connectFirebase(getDefaultDbUrl());
+      }
+    }
+
+    function connectFirebase(rawUrl) {
+      let dbUrl = rawUrl.trim();
+      if (!dbUrl.startsWith("http")) {
+        dbUrl = `https://${dbUrl}.firebaseio.com`;
+      }
+      
+      const badgeDot = document.getElementById("badgeDot");
+      const badgeText = document.getElementById("badgeText");
+      badgeDot.className = "badge-dot connecting";
+      badgeText.textContent = "Connecting...";
+
+      try {
+        const app = initializeApp({ databaseURL: dbUrl }, "ludo-admin-" + Date.now());
+        db = getDatabase(app);
+
+        // Listen for all matches in /ludo_matches
+        const allMatchesRef = ref(db, "ludo_matches");
+        onValue(allMatchesRef, snapshot => {
+          badgeDot.className = "badge-dot connected";
+          badgeText.textContent = "Live";
+          matchesCache = snapshot.val() || {};
+          renderMatchesList(matchesCache);
+        }, error => {
+          badgeDot.className = "badge-dot error";
+          badgeText.textContent = "DB Error";
+          logActivity(`Firebase error: ${error.message}`);
+        });
+
+      } catch (err) {
+        badgeDot.className = "badge-dot error";
+        badgeText.textContent = "Init Failed";
+        logActivity(`Init failed: ${err.message}`);
+      }
+    }
+
+    // --- UI Dice Buttons Creation ---
+    function buildDiceButtons() {
+      colors.forEach(color => {
+        const row = document.getElementById("row-" + color);
+        row.innerHTML = "";
+        
+        // 1 to 6
+        for (let i = 1; i <= 6; i++) {
+          const btn = document.createElement("button");
+          btn.className = "dice-btn";
+          btn.textContent = i;
+          btn.dataset.val = i;
+          btn.onclick = () => setDiceOverride(color, i);
+          row.appendChild(btn);
+        }
+
+        // Random
+        const randBtn = document.createElement("button");
+        randBtn.className = "dice-btn rand-btn active";
+        randBtn.textContent = "🎲";
+        randBtn.dataset.val = 0;
+        randBtn.title = "Set to Random";
+        randBtn.onclick = () => setDiceOverride(color, 0);
+        row.appendChild(randBtn);
+      });
+    }
+
+    // --- Override Control Logic ---
+    window.setDiceOverride = function(color, val) {
+      if (!currentMatchNumber) {
+        alert("Please select or enter an active match number first!");
+        return;
+      }
+      localOverrides[color] = val;
+      updateColorUI(color, val);
+
+      if (db) {
+        const overridePath = `ludo_matches/${currentMatchNumber}/dice_override/${color}`;
+        set(ref(db, overridePath), val)
+          .then(() => {
+            const desc = val === 0 ? "RANDOM" : `FORCED ${val}`;
+            logActivity(`Set ${color.toUpperCase()} dice to ${desc} (Match #${currentMatchNumber})`, true);
+          })
+          .catch(e => {
+            logActivity(`Failed to set ${color}: ${e.message}`);
+          });
+      }
+    };
+
+    window.resetAllToRandom = function() {
+      if (!currentMatchNumber) return;
+      colors.forEach(c => setDiceOverride(c, 0));
+    };
+
+    window.setAllDice = function(val) {
+      if (!currentMatchNumber) return;
+      colors.forEach(c => setDiceOverride(c, val));
+    };
+
+    function updateColorUI(color, val) {
+      const row = document.getElementById("row-" + color);
+      if (!row) return;
+      row.querySelectorAll(".dice-btn").forEach(btn => {
+        btn.classList.toggle("active", parseInt(btn.dataset.val) === val);
+      });
+      const tag = document.getElementById("tag-" + color);
+      if (tag) {
+        tag.textContent = val === 0 ? "RANDOM" : `FORCED ${val}`;
+      }
+    }
+
+    // --- Matches List & Selection ---
+    function renderMatchesList(matchesData) {
+      const listEl = document.getElementById("matchesList");
+      const countBadge = document.getElementById("matchCountBadge");
+      const keys = Object.keys(matchesData);
+      
+      const activeKeys = keys.filter(k => matchesData[k]);
+      countBadge.textContent = `${activeKeys.length} matches`;
+
+      if (activeKeys.length === 0) {
+        listEl.innerHTML = `<div class="no-matches">No active matches found.<br>Start a match in Ludo King to see it here!</div>`;
+        return;
+      }
+
+      listEl.innerHTML = "";
+      activeKeys.sort().reverse().forEach(matchNum => {
+        const data = matchesData[matchNum];
+        const item = document.createElement("div");
+        item.className = "match-card" + (currentMatchNumber === matchNum ? " active-selected" : "");
+
+        const players = data.players || ["red", "green", "blue", "yellow"];
+        let dotsHtml = "";
+        players.forEach(p => {
+          dotsHtml += `<span class="p-dot ${p}"></span>`;
+        });
+
+        item.innerHTML = `
+          <div class="match-card-content" onclick="selectMatch('${matchNum}')">
+            <span class="match-item-number">#${matchNum}</span>
+            <span class="match-item-time">${data.active ? "🟢 Live Now" : "⚪ Glitched / Ended"}</span>
+            <div class="match-player-dots">${dotsHtml}</div>
+          </div>
+          <button class="btn-delete-match" onclick="deleteMatch('${matchNum}', event)" title="Delete this match">🗑️ Delete</button>
+        `;
+        listEl.appendChild(item);
+      });
+    }
+
+    window.deleteMatch = async function(matchNum, event) {
+      if (event) event.stopPropagation();
+      if (!confirm(`Delete match #${matchNum} from Firebase? (Use if glitched or ended)`)) return;
+      ensureDb();
+      if (!db) return;
+
+      try {
+        await remove(ref(db, `ludo_matches/${matchNum}`));
+        logActivity(`Deleted glitched match #${matchNum}`, true);
+        if (currentMatchNumber === matchNum) {
+          currentMatchNumber = null;
+          document.getElementById("activeMatchLabel").textContent = "#----";
+          document.getElementById("matchLiveBadge").style.display = "none";
+          document.getElementById("manualMatchInput").value = "";
+          colors.forEach(c => updateColorUI(c, 0));
+        }
+      } catch (err) {
+        alert("Failed to delete match: " + err.message);
+      }
+    };
+
+    window.cleanAllInactiveMatches = async function() {
+      ensureDb();
+      if (!db) return;
+      const keys = Object.keys(matchesCache);
+      const toDelete = keys.filter(k => matchesCache[k] && matchesCache[k].active === false);
+      if (toDelete.length === 0) {
+        alert("No inactive or ended matches found to clean.");
+        return;
+      }
+      if (!confirm(`Delete all ${toDelete.length} ended/glitched matches?`)) return;
+
+      for (const k of toDelete) {
+        await remove(ref(db, `ludo_matches/${k}`));
+      }
+      logActivity(`Cleaned ${toDelete.length} glitched/inactive matches`, true);
+    };
+
+    window.selectManualMatch = function() {
+      const input = document.getElementById("manualMatchInput");
+      const matchNum = input.value.trim().replace("#", "");
+      if (!matchNum) return;
+      selectMatch(matchNum);
+    };
+
+    window.selectMatch = function(matchNum) {
+      currentMatchNumber = matchNum;
+      document.getElementById("activeMatchLabel").textContent = `#${matchNum}`;
+      document.getElementById("matchLiveBadge").style.display = "inline-flex";
+      document.getElementById("manualMatchInput").value = matchNum;
+
+      // Update highlighted item in list
+      document.querySelectorAll(".match-card").forEach(el => {
+        const isMatch = el.querySelector(".match-item-number")?.textContent === `#${matchNum}`;
+        el.classList.toggle("active-selected", isMatch);
+      });
+
+      logActivity(`Now controlling Match #${matchNum}`);
+
+      // Realtime listener for dice overrides for this specific match
+      if (db) {
+        const matchOverridesRef = ref(db, `ludo_matches/${matchNum}/dice_override`);
+        onValue(matchOverridesRef, snapshot => {
+          const overrides = snapshot.val() || {};
+          colors.forEach(c => {
+            const v = overrides[c] !== undefined ? overrides[c] : 0;
+            const previousVal = localOverrides[c];
+            localOverrides[c] = v;
+            updateColorUI(c, v);
+
+            // Log if game phone consumed the override and reset back to random!
+            if (previousVal > 0 && v === 0) {
+              logActivity(`🎲 ${c.toUpperCase()} dice override (${previousVal}) was used! Auto-reset to Random.`, false);
+            }
+          });
+        });
+      }
+    };
+
+    function logActivity(msg, isSuccess = false) {
+      const log = document.getElementById("activityLog");
+      const timeStr = new Date().toLocaleTimeString();
+      const div = document.createElement("div");
+      div.className = "log-item";
+      div.innerHTML = `<span class="log-time">[${timeStr}]</span> <span class="${isSuccess ? "log-success" : ""}">${msg}</span>`;
+      log.appendChild(div);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function initDashboard() {
+      buildDiceButtons();
+      const defaultUrl = getDefaultDbUrl();
+      document.getElementById("dbUrlInput").value = defaultUrl;
+      connectFirebase(defaultUrl);
+
+      // Auto-select match if passed in query param ?match=1234
+      const urlParams = new URLSearchParams(window.location.search);
+      const matchParam = urlParams.get("match");
+      if (matchParam) {
+        selectMatch(matchParam);
+      }
+    }
+
+    // Initialize Auth check on page load
+    checkAuth();
+  </script>
+</body>
+</html>
