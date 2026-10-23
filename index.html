@@ -572,10 +572,13 @@
     }
 
     @keyframes pulseDot {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: scale(1);
         opacity: 1;
       }
+
       50% {
         transform: scale(1.35);
         opacity: 0.75;
@@ -586,17 +589,423 @@
       border-color: var(--red);
       box-shadow: 0 0 25px var(--red-glow);
     }
+
     .live-turn-banner.turn-green {
       border-color: var(--green);
       box-shadow: 0 0 25px var(--green-glow);
     }
+
     .live-turn-banner.turn-blue {
       border-color: var(--blue);
       box-shadow: 0 0 25px var(--blue-glow);
     }
+
     .live-turn-banner.turn-yellow {
       border-color: var(--yellow);
       box-shadow: 0 0 25px var(--yellow-glow);
+    }
+
+    /* ================= SMART DICE SUGGESTION SYSTEM CSS ================= */
+    .smart-suggestion-panel {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.96) 0%, rgba(15, 23, 42, 0.98) 100%);
+      border: 1.5px solid rgba(99, 102, 241, 0.55);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .smart-suggestion-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #ec4899, #f59e0b, #10b981, #3b82f6);
+    }
+
+    .smart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .smart-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .smart-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .smart-badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+
+    .smart-badge-status.possible {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(16, 185, 129, 0.5);
+      color: #34d399;
+    }
+
+    .smart-badge-status.impossible {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #f87171;
+    }
+
+    /* Active Player & Streak row */
+    .smart-context-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.82rem;
+    }
+
+    .smart-player-picker {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .player-pill-btn {
+      padding: 4px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .player-pill-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .player-pill-btn.active-blue {
+      background: var(--blue-bg);
+      border-color: var(--blue);
+      color: #93c5fd;
+      box-shadow: 0 0 10px var(--blue-glow);
+    }
+    .player-pill-btn.active-red {
+      background: var(--red-bg);
+      border-color: var(--red);
+      color: #fca5a5;
+      box-shadow: 0 0 10px var(--red-glow);
+    }
+    .player-pill-btn.active-green {
+      background: var(--green-bg);
+      border-color: var(--green);
+      color: #6ee7b7;
+      box-shadow: 0 0 10px var(--green-glow);
+    }
+    .player-pill-btn.active-yellow {
+      background: var(--yellow-bg);
+      border-color: var(--yellow);
+      color: #fde047;
+      box-shadow: 0 0 10px var(--yellow-glow);
+    }
+
+    /* Objective Selector Tabs */
+    .objective-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .obj-tab {
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .obj-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .obj-tab.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: var(--accent);
+      color: #c7d2fe;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+    }
+
+    /* Dynamic Parameters Bar */
+    .smart-params-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .smart-select {
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      color: #f8fafc;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-family: 'Outfit', sans-serif;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .smart-select:focus {
+      border-color: var(--accent);
+    }
+
+    /* Suggestion Result Hero Card */
+    .suggestion-hero-card {
+      background: rgba(15, 23, 42, 0.9);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+    }
+
+    @media (max-width: 680px) {
+      .suggestion-hero-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .hero-info-col {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-objective-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+      font-weight: 700;
+    }
+
+    .hero-objective-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.8rem;
+      color: #cbd5e1;
+    }
+
+    .hero-alt-sequence {
+      font-size: 0.8rem;
+      color: #a5b4fc;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      flex-wrap: wrap;
+    }
+
+    .hero-status-message {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .hero-dice-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      text-align: center;
+      min-width: 130px;
+    }
+
+    .hero-dice-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #94a3b8;
+    }
+
+    .hero-dice-display {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .dice-pill-big {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      border: 1.5px solid #818cf8;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: #fff;
+      box-shadow: 0 0 16px rgba(99, 102, 241, 0.5);
+    }
+
+    .dice-pill-big.empty {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #64748b;
+      box-shadow: none;
+      font-size: 0.85rem;
+      width: auto;
+      padding: 0 12px;
+    }
+
+    .dice-seq-arrow {
+      color: #a5b4fc;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    .btn-queue-suggestion {
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      border: 1px solid #34d399;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-queue-suggestion:hover {
+      background: linear-gradient(135deg, #059669, #047857);
+      box-shadow: 0 0 14px rgba(16, 185, 129, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-queue-suggestion:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Live Token Board / Mini Track viewer */
+    .smart-board-foldable {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 14px;
+    }
+
+    .board-fold-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+
+    .token-grid-chips {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .token-chip-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .token-chip-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .token-chip-card.selected-target {
+      border-color: #f59e0b;
+      background: rgba(245, 158, 11, 0.12);
+      box-shadow: 0 0 10px rgba(245, 158, 11, 0.25);
     }
 
     /* Player Cards */
@@ -1098,6 +1507,7 @@
         transform: translateX(100%);
         opacity: 0;
       }
+
       to {
         transform: translateX(0);
         opacity: 1;
@@ -1109,104 +1519,764 @@
         opacity: 0;
         transform: translateY(8px);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
 
-/* =========================================================
+    /* =========================================================
    POP STUDIO BRUTALISM — UI OVERRIDE
    Keeps application logic/markup intact.
    ========================================================= */
-@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
-:root{
-  --bg-main:#f4f0e8; --ink:#111111; --paper:#fffdf7; --line:#111111;
-  --pink:#ff2d78; --cyan:#00d9ff; --lime:#b7ff00; --orange:#ff6b00;
-  --yellow:#ffe600; --purple:#8b5cff; --red:#ff304f; --green:#00c878; --blue:#1677ff;
-  --shadow:6px 6px 0 #111; --shadow-sm:4px 4px 0 #111;
-  --text-main:#111; --text-muted:#555; --border-color:#111; --accent:#ff2d78; --accent-hover:#ff2d78;
-  --bg-card:#fffdf7; --bg-card-hover:#fffdf7;
-  --red-bg:#ff304f; --green-bg:#00c878; --blue-bg:#1677ff; --yellow-bg:#ffe600;
-  --red-glow:none; --green-glow:none; --blue-glow:none; --yellow-glow:none;
-}
-*{box-sizing:border-box}
-html{background:var(--bg-main);scroll-behavior:smooth}
-body{background:var(--bg-main);color:var(--ink);font-family:'Space Grotesk',sans-serif;min-height:100vh;padding:0 14px 44px;overflow-x:hidden}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:linear-gradient(#111 1px,transparent 1px),linear-gradient(90deg,#111 1px,transparent 1px);background-size:28px 28px;z-index:-1}
-button,input{font-family:inherit}
-.navbar{width:100%;max-width:1180px;padding:18px 0 14px;margin-bottom:22px;border-bottom:3px solid var(--ink);align-items:center}
-.brand{font-family:'Archivo Black',sans-serif;font-size:clamp(1.05rem,3vw,1.55rem);letter-spacing:-.05em;color:var(--ink);background:none;-webkit-text-fill-color:initial;text-transform:uppercase}
-.brand .logo-icon{filter:none;font-size:1.5rem}
-.nav-actions{gap:8px}
-.badge{background:var(--lime);border:2px solid var(--ink);border-radius:3px;color:var(--ink);padding:5px 9px;font-weight:800;box-shadow:3px 3px 0 var(--ink);font-size:.72rem}
-.badge-dot{border:1px solid var(--ink)}
-.btn-secondary,.btn-danger,.btn-connect,.btn-primary{border:2px solid var(--ink);border-radius:3px;font-weight:800;box-shadow:var(--shadow-sm);transition:transform .1s,box-shadow .1s;background:var(--cyan);color:var(--ink)}
-.btn-secondary{padding:8px 12px;background:var(--paper)}
-.btn-danger{background:var(--pink);color:#fff;padding:7px 11px}
-.btn-connect{background:var(--lime);padding:9px 15px}
-.btn-primary{background:var(--pink);color:#fff;padding:13px;margin-top:8px;box-shadow:5px 5px 0 var(--ink)}
-.btn-secondary:hover,.btn-danger:hover,.btn-connect:hover,.btn-primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
-.container{max-width:1180px}
-#loginView{background:var(--paper);border:3px solid var(--ink);border-radius:0;padding:34px 28px;box-shadow:10px 10px 0 var(--pink);backdrop-filter:none}
-.login-icon{filter:none}.login-title{font-family:'Archivo Black',sans-serif;color:var(--ink);background:none;-webkit-text-fill-color:initial;text-transform:uppercase;letter-spacing:-.06em}.login-desc,.form-label{color:#444}
-.form-input,.settings-input,.match-num-input{background:#fff;border:2px solid var(--ink);border-radius:2px;color:var(--ink);box-shadow:3px 3px 0 var(--ink)}
-.form-input:focus,.settings-input:focus,.match-num-input:focus{border-color:var(--pink);box-shadow:3px 3px 0 var(--pink);outline:none}
-.login-error{background:#ffd7df;border:2px solid var(--ink);border-radius:2px;color:#111}
-#dashboardView{gap:20px}
-#dbSettingsBar,.matches-panel,.control-area,#userMgmtSection,.modal-card{background:var(--paper);border:3px solid var(--ink);border-radius:0;box-shadow:var(--shadow);backdrop-filter:none}
-#dbSettingsBar{padding:14px 16px}
-#dbSettingsBar label{color:var(--ink)}
-.dashboard-grid{grid-template-columns:330px minmax(0,1fr);gap:20px}
-.section-title,.match-title,.form-label{font-weight:800}
-.matches-panel{padding:16px;gap:13px}
-.match-card{background:#fff;border:2px solid var(--ink);border-radius:2px;box-shadow:3px 3px 0 var(--ink);padding:11px 12px}
-.match-card:hover{background:var(--cyan);border-color:var(--ink);transform:translate(-1px,-1px)}
-.match-card.active-selected{background:var(--yellow);border:2px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
-.match-item-number,.match-highlight{color:var(--pink);font-family:'DM Mono',monospace}
-.match-card.active-selected .match-item-number{color:var(--ink)}
-.matches-list{max-height:440px}
-.control-area{padding:18px;gap:15px}
-.control-header{border-bottom:3px solid var(--ink);padding-bottom:13px}
-.match-highlight{font-size:1.35rem;font-weight:800}
-.live-turn-banner{background:var(--cyan);border:3px solid var(--ink);border-radius:0;box-shadow:6px 6px 0 var(--ink);color:var(--ink)}
-.turn-pulse-dot{background:var(--pink);box-shadow:none;border:2px solid var(--ink)}
-.live-turn-banner.turn-red,.live-turn-banner.turn-green,.live-turn-banner.turn-blue,.live-turn-banner.turn-yellow{border-color:var(--ink);box-shadow:6px 6px 0 var(--ink)}
-.colors-grid{gap:15px}
-.color-panel{border:3px solid var(--ink)!important;border-radius:0;padding:14px;background:#fff!important;box-shadow:5px 5px 0 var(--ink);color:var(--ink)}
-.color-panel.red{background:var(--red)!important}.color-panel.green{background:var(--green)!important}.color-panel.blue{background:var(--blue)!important}.color-panel.yellow{background:var(--yellow)!important}
-.color-panel.red .color-title,.color-panel.green .color-title,.color-panel.blue .color-title,.color-panel.yellow .color-title{color:#111}
-.current-override-tag{background:#111;color:#fff;border-radius:2px}
-.live-chance-badge{background:#111!important;border:2px solid #111!important;color:#fff!important;border-radius:2px}
-.dice-buttons-row{gap:7px}
-.dice-btn{border:2px solid var(--ink);border-radius:2px;background:#fff;color:#111;box-shadow:3px 3px 0 #111;font-family:'Archivo Black',sans-serif;opacity:1}
-.dice-btn:hover{background:var(--cyan);transform:translate(-1px,-1px);box-shadow:4px 4px 0 #111}
-.color-panel.red .dice-btn.active,.color-panel.green .dice-btn.active,.color-panel.blue .dice-btn.active,.color-panel.yellow .dice-btn.active{background:#111;border-color:#111;color:#fff;box-shadow:3px 3px 0 #fff;transform:translate(-1px,-1px) scale(1.04)}
-.dice-btn.rand-btn{background:var(--purple);color:#fff;border-color:#111}
-.queue-section{border-top:2px dashed #111}
-.queue-chip{background:#fff;border:2px solid #111;border-radius:2px;color:#111;box-shadow:2px 2px 0 #111}
-.btn-clear-queue{color:#111;background:#fff;border:2px solid #111;border-radius:2px}
-/* Terminal activity log */
-.activity-log{position:relative;background:#080808;border:3px solid #111;border-radius:0;color:#d7ff7a;font-family:'DM Mono',monospace;font-size:.72rem;max-height:150px;min-height:96px;padding:13px 14px;box-shadow:6px 6px 0 var(--orange);overflow-y:auto;line-height:1.55}
-.activity-log:before{content:'●  ●  ●   REALTIME ACTIVITY // SYSTEM CONSOLE';display:block;color:#ff6b00;border-bottom:1px solid #444;padding-bottom:8px;margin-bottom:8px;font-weight:600;letter-spacing:.04em}
-.log-item{margin-bottom:5px;padding-left:3px}.log-item:before{content:'> ';color:#00d9ff}.log-time{color:#8a8a8a}.log-success{color:#b7ff00}.log-warn{color:#ffe600}
-#userMgmtSection{padding:18px}.user-create-form{background:#eee9df;border:2px solid #111;border-radius:0}.users-table th,.users-table td{border-bottom:2px solid #111}.status-pill{border-radius:2px!important;border:2px solid #111!important;color:#111!important}.status-pill.active{background:var(--lime)!important}.status-pill.revoked{background:var(--pink)!important}
-.modal-backdrop{background:rgba(17,17,17,.72);backdrop-filter:none}.modal-card{max-height:88vh}
-.toast-msg{background:var(--yellow);color:#111;border:3px solid #111;border-radius:0;box-shadow:6px 6px 0 #111}
-@media(max-width:860px){.dashboard-grid{grid-template-columns:1fr}.matches-panel{order:0}.control-area{order:1}.matches-list{max-height:260px}}
-@media(max-width:640px){
- body{padding:0 9px 30px;font-size:14px}.navbar{padding:12px 0;margin-bottom:15px;gap:10px}.brand{font-size:1rem}.brand .logo-icon{font-size:1.2rem}.nav-actions{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:7px}.nav-actions .badge{justify-content:center}.nav-actions button{width:100%}
- #loginView{margin-top:25px;padding:26px 18px;box-shadow:7px 7px 0 var(--pink)}
- #dbSettingsBar{display:flex!important;flex-direction:column;align-items:stretch}.settings-input{min-width:0;width:100%}
- .dashboard-grid{gap:14px}.matches-panel,.control-area,#userMgmtSection{padding:13px;box-shadow:4px 4px 0 #111}.section-title{font-size:.9rem}.manual-connect-box{display:grid;grid-template-columns:1fr auto}.match-num-input{min-width:0}
- .control-header{align-items:stretch}.current-match-display{flex-wrap:wrap}.quick-actions{width:100%;display:grid;grid-template-columns:1fr 1fr}.quick-actions button{width:100%}
- .live-turn-banner{padding:11px 12px;align-items:flex-start;flex-direction:column;box-shadow:4px 4px 0 #111}.live-turn-indicator{font-size:.92rem}.live-turn-banner>.badge{align-self:flex-start}
- .color-panel{padding:11px;box-shadow:4px 4px 0 #111}.color-panel-header{align-items:flex-start}.color-title{font-size:.88rem}.dice-buttons-row{grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}.dice-btn{font-size:.95rem;min-width:0;box-shadow:2px 2px 0 #111}.dice-btn:active{transform:translate(1px,1px) scale(.96)}
- .queue-chips-row{gap:5px}.queue-chip{font-size:.72rem;padding:4px 6px}.activity-log{font-size:.66rem;max-height:170px;box-shadow:4px 4px 0 var(--orange);word-break:break-word}.activity-log:before{font-size:.58rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
- .table-container{overflow-x:auto}.users-table{min-width:680px}.modal-backdrop{padding:10px}.modal-card{padding:15px;box-shadow:5px 5px 0 #111}
-}
-@media(max-width:380px){body{padding-left:6px;padding-right:6px}.brand{font-size:.88rem}.dice-buttons-row{gap:3px}.dice-btn{font-size:.82rem}.quick-actions{grid-template-columns:1fr}.live-turn-indicator{font-size:.82rem}}
+    @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
+    :root {
+      --bg-main: #f4f0e8;
+      --ink: #111111;
+      --paper: #fffdf7;
+      --line: #111111;
+      --pink: #ff2d78;
+      --cyan: #00d9ff;
+      --lime: #b7ff00;
+      --orange: #ff6b00;
+      --yellow: #ffe600;
+      --purple: #8b5cff;
+      --red: #ff304f;
+      --green: #00c878;
+      --blue: #1677ff;
+      --shadow: 6px 6px 0 #111;
+      --shadow-sm: 4px 4px 0 #111;
+      --text-main: #111;
+      --text-muted: #555;
+      --border-color: #111;
+      --accent: #ff2d78;
+      --accent-hover: #ff2d78;
+      --bg-card: #fffdf7;
+      --bg-card-hover: #fffdf7;
+      --red-bg: #ff304f;
+      --green-bg: #00c878;
+      --blue-bg: #1677ff;
+      --yellow-bg: #ffe600;
+      --red-glow: none;
+      --green-glow: none;
+      --blue-glow: none;
+      --yellow-glow: none;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      background: var(--bg-main);
+      scroll-behavior: smooth
+    }
+
+    body {
+      background: var(--bg-main);
+      color: var(--ink);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      padding: 0 14px 44px;
+      overflow-x: hidden
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .13;
+      background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px);
+      background-size: 28px 28px;
+      z-index: -1
+    }
+
+    button,
+    input {
+      font-family: inherit
+    }
+
+    .navbar {
+      width: 100%;
+      max-width: 1180px;
+      padding: 18px 0 14px;
+      margin-bottom: 22px;
+      border-bottom: 3px solid var(--ink);
+      align-items: center
+    }
+
+    .brand {
+      font-family: 'Archivo Black', sans-serif;
+      font-size: clamp(1.05rem, 3vw, 1.55rem);
+      letter-spacing: -.05em;
+      color: var(--ink);
+      background: none;
+      -webkit-text-fill-color: initial;
+      text-transform: uppercase
+    }
+
+    .brand .logo-icon {
+      filter: none;
+      font-size: 1.5rem
+    }
+
+    .nav-actions {
+      gap: 8px
+    }
+
+    .badge {
+      background: var(--lime);
+      border: 2px solid var(--ink);
+      border-radius: 3px;
+      color: var(--ink);
+      padding: 5px 9px;
+      font-weight: 800;
+      box-shadow: 3px 3px 0 var(--ink);
+      font-size: .72rem
+    }
+
+    .badge-dot {
+      border: 1px solid var(--ink)
+    }
+
+    .btn-secondary,
+    .btn-danger,
+    .btn-connect,
+    .btn-primary {
+      border: 2px solid var(--ink);
+      border-radius: 3px;
+      font-weight: 800;
+      box-shadow: var(--shadow-sm);
+      transition: transform .1s, box-shadow .1s;
+      background: var(--cyan);
+      color: var(--ink)
+    }
+
+    .btn-secondary {
+      padding: 8px 12px;
+      background: var(--paper)
+    }
+
+    .btn-danger {
+      background: var(--pink);
+      color: #fff;
+      padding: 7px 11px
+    }
+
+    .btn-connect {
+      background: var(--lime);
+      padding: 9px 15px
+    }
+
+    .btn-primary {
+      background: var(--pink);
+      color: #fff;
+      padding: 13px;
+      margin-top: 8px;
+      box-shadow: 5px 5px 0 var(--ink)
+    }
+
+    .btn-secondary:hover,
+    .btn-danger:hover,
+    .btn-connect:hover,
+    .btn-primary:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink)
+    }
+
+    .container {
+      max-width: 1180px
+    }
+
+    #loginView {
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      padding: 34px 28px;
+      box-shadow: 10px 10px 0 var(--pink);
+      backdrop-filter: none
+    }
+
+    .login-icon {
+      filter: none
+    }
+
+    .login-title {
+      font-family: 'Archivo Black', sans-serif;
+      color: var(--ink);
+      background: none;
+      -webkit-text-fill-color: initial;
+      text-transform: uppercase;
+      letter-spacing: -.06em
+    }
+
+    .login-desc,
+    .form-label {
+      color: #444
+    }
+
+    .form-input,
+    .settings-input,
+    .match-num-input {
+      background: #fff;
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      color: var(--ink);
+      box-shadow: 3px 3px 0 var(--ink)
+    }
+
+    .form-input:focus,
+    .settings-input:focus,
+    .match-num-input:focus {
+      border-color: var(--pink);
+      box-shadow: 3px 3px 0 var(--pink);
+      outline: none
+    }
+
+    .login-error {
+      background: #ffd7df;
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      color: #111
+    }
+
+    #dashboardView {
+      gap: 20px
+    }
+
+    #dbSettingsBar,
+    .matches-panel,
+    .control-area,
+    #userMgmtSection,
+    .modal-card {
+      background: var(--paper);
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      box-shadow: var(--shadow);
+      backdrop-filter: none
+    }
+
+    #dbSettingsBar {
+      padding: 14px 16px
+    }
+
+    #dbSettingsBar label {
+      color: var(--ink)
+    }
+
+    .dashboard-grid {
+      grid-template-columns: 330px minmax(0, 1fr);
+      gap: 20px
+    }
+
+    .section-title,
+    .match-title,
+    .form-label {
+      font-weight: 800
+    }
+
+    .matches-panel {
+      padding: 16px;
+      gap: 13px
+    }
+
+    .match-card {
+      background: #fff;
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      box-shadow: 3px 3px 0 var(--ink);
+      padding: 11px 12px
+    }
+
+    .match-card:hover {
+      background: var(--cyan);
+      border-color: var(--ink);
+      transform: translate(-1px, -1px)
+    }
+
+    .match-card.active-selected {
+      background: var(--yellow);
+      border: 2px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--ink)
+    }
+
+    .match-item-number,
+    .match-highlight {
+      color: var(--pink);
+      font-family: 'DM Mono', monospace
+    }
+
+    .match-card.active-selected .match-item-number {
+      color: var(--ink)
+    }
+
+    .matches-list {
+      max-height: 440px
+    }
+
+    .control-area {
+      padding: 18px;
+      gap: 15px
+    }
+
+    .control-header {
+      border-bottom: 3px solid var(--ink);
+      padding-bottom: 13px
+    }
+
+    .match-highlight {
+      font-size: 1.35rem;
+      font-weight: 800
+    }
+
+    .live-turn-banner {
+      background: var(--cyan);
+      border: 3px solid var(--ink);
+      border-radius: 0;
+      box-shadow: 6px 6px 0 var(--ink);
+      color: var(--ink)
+    }
+
+    .turn-pulse-dot {
+      background: var(--pink);
+      box-shadow: none;
+      border: 2px solid var(--ink)
+    }
+
+    .live-turn-banner.turn-red,
+    .live-turn-banner.turn-green,
+    .live-turn-banner.turn-blue,
+    .live-turn-banner.turn-yellow {
+      border-color: var(--ink);
+      box-shadow: 6px 6px 0 var(--ink)
+    }
+
+    .colors-grid {
+      gap: 15px
+    }
+
+    .color-panel {
+      border: 3px solid var(--ink) !important;
+      border-radius: 0;
+      padding: 14px;
+      background: #fff !important;
+      box-shadow: 5px 5px 0 var(--ink);
+      color: var(--ink)
+    }
+
+    .color-panel.red {
+      background: var(--red) !important
+    }
+
+    .color-panel.green {
+      background: var(--green) !important
+    }
+
+    .color-panel.blue {
+      background: var(--blue) !important
+    }
+
+    .color-panel.yellow {
+      background: var(--yellow) !important
+    }
+
+    .color-panel.red .color-title,
+    .color-panel.green .color-title,
+    .color-panel.blue .color-title,
+    .color-panel.yellow .color-title {
+      color: #111
+    }
+
+    .current-override-tag {
+      background: #111;
+      color: #fff;
+      border-radius: 2px
+    }
+
+    .live-chance-badge {
+      background: #111 !important;
+      border: 2px solid #111 !important;
+      color: #fff !important;
+      border-radius: 2px
+    }
+
+    .dice-buttons-row {
+      gap: 7px
+    }
+
+    .dice-btn {
+      border: 2px solid var(--ink);
+      border-radius: 2px;
+      background: #fff;
+      color: #111;
+      box-shadow: 3px 3px 0 #111;
+      font-family: 'Archivo Black', sans-serif;
+      opacity: 1
+    }
+
+    .dice-btn:hover {
+      background: var(--cyan);
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 #111
+    }
+
+    .color-panel.red .dice-btn.active,
+    .color-panel.green .dice-btn.active,
+    .color-panel.blue .dice-btn.active,
+    .color-panel.yellow .dice-btn.active {
+      background: #111;
+      border-color: #111;
+      color: #fff;
+      box-shadow: 3px 3px 0 #fff;
+      transform: translate(-1px, -1px) scale(1.04)
+    }
+
+    .dice-btn.rand-btn {
+      background: var(--purple);
+      color: #fff;
+      border-color: #111
+    }
+
+    .queue-section {
+      border-top: 2px dashed #111
+    }
+
+    .queue-chip {
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 2px;
+      color: #111;
+      box-shadow: 2px 2px 0 #111
+    }
+
+    .btn-clear-queue {
+      color: #111;
+      background: #fff;
+      border: 2px solid #111;
+      border-radius: 2px
+    }
+
+    /* Terminal activity log */
+    .activity-log {
+      position: relative;
+      background: #080808;
+      border: 3px solid #111;
+      border-radius: 0;
+      color: #d7ff7a;
+      font-family: 'DM Mono', monospace;
+      font-size: .72rem;
+      max-height: 150px;
+      min-height: 96px;
+      padding: 13px 14px;
+      box-shadow: 6px 6px 0 var(--orange);
+      overflow-y: auto;
+      line-height: 1.55
+    }
+
+    .activity-log:before {
+      content: '●  ●  ●   REALTIME ACTIVITY // SYSTEM CONSOLE';
+      display: block;
+      color: #ff6b00;
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: .04em
+    }
+
+    .log-item {
+      margin-bottom: 5px;
+      padding-left: 3px
+    }
+
+    .log-item:before {
+      content: '> ';
+      color: #00d9ff
+    }
+
+    .log-time {
+      color: #8a8a8a
+    }
+
+    .log-success {
+      color: #b7ff00
+    }
+
+    .log-warn {
+      color: #ffe600
+    }
+
+    #userMgmtSection {
+      padding: 18px
+    }
+
+    .user-create-form {
+      background: #eee9df;
+      border: 2px solid #111;
+      border-radius: 0
+    }
+
+    .users-table th,
+    .users-table td {
+      border-bottom: 2px solid #111
+    }
+
+    .status-pill {
+      border-radius: 2px !important;
+      border: 2px solid #111 !important;
+      color: #111 !important
+    }
+
+    .status-pill.active {
+      background: var(--lime) !important
+    }
+
+    .status-pill.revoked {
+      background: var(--pink) !important
+    }
+
+    .modal-backdrop {
+      background: rgba(17, 17, 17, .72);
+      backdrop-filter: none
+    }
+
+    .modal-card {
+      max-height: 88vh
+    }
+
+    .toast-msg {
+      background: var(--yellow);
+      color: #111;
+      border: 3px solid #111;
+      border-radius: 0;
+      box-shadow: 6px 6px 0 #111
+    }
+
+    @media(max-width:860px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr
+      }
+
+      .matches-panel {
+        order: 0
+      }
+
+      .control-area {
+        order: 1
+      }
+
+      .matches-list {
+        max-height: 260px
+      }
+    }
+
+    @media(max-width:640px) {
+      body {
+        padding: 0 9px 30px;
+        font-size: 14px
+      }
+
+      .navbar {
+        padding: 12px 0;
+        margin-bottom: 15px;
+        gap: 10px
+      }
+
+      .brand {
+        font-size: 1rem
+      }
+
+      .brand .logo-icon {
+        font-size: 1.2rem
+      }
+
+      .nav-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px
+      }
+
+      .nav-actions .badge {
+        justify-content: center
+      }
+
+      .nav-actions button {
+        width: 100%
+      }
+
+      #loginView {
+        margin-top: 25px;
+        padding: 26px 18px;
+        box-shadow: 7px 7px 0 var(--pink)
+      }
+
+      #dbSettingsBar {
+        display: flex !important;
+        flex-direction: column;
+        align-items: stretch
+      }
+
+      .settings-input {
+        min-width: 0;
+        width: 100%
+      }
+
+      .dashboard-grid {
+        gap: 14px
+      }
+
+      .matches-panel,
+      .control-area,
+      #userMgmtSection {
+        padding: 13px;
+        box-shadow: 4px 4px 0 #111
+      }
+
+      .section-title {
+        font-size: .9rem
+      }
+
+      .manual-connect-box {
+        display: grid;
+        grid-template-columns: 1fr auto
+      }
+
+      .match-num-input {
+        min-width: 0
+      }
+
+      .control-header {
+        align-items: stretch
+      }
+
+      .current-match-display {
+        flex-wrap: wrap
+      }
+
+      .quick-actions {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr
+      }
+
+      .quick-actions button {
+        width: 100%
+      }
+
+      .live-turn-banner {
+        padding: 11px 12px;
+        align-items: flex-start;
+        flex-direction: column;
+        box-shadow: 4px 4px 0 #111
+      }
+
+      .live-turn-indicator {
+        font-size: .92rem
+      }
+
+      .live-turn-banner>.badge {
+        align-self: flex-start
+      }
+
+      .color-panel {
+        padding: 11px;
+        box-shadow: 4px 4px 0 #111
+      }
+
+      .color-panel-header {
+        align-items: flex-start
+      }
+
+      .color-title {
+        font-size: .88rem
+      }
+
+      .dice-buttons-row {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 5px
+      }
+
+      .dice-btn {
+        font-size: .95rem;
+        min-width: 0;
+        box-shadow: 2px 2px 0 #111
+      }
+
+      .dice-btn:active {
+        transform: translate(1px, 1px) scale(.96)
+      }
+
+      .queue-chips-row {
+        gap: 5px
+      }
+
+      .queue-chip {
+        font-size: .72rem;
+        padding: 4px 6px
+      }
+
+      .activity-log {
+        font-size: .66rem;
+        max-height: 170px;
+        box-shadow: 4px 4px 0 var(--orange);
+        word-break: break-word
+      }
+
+      .activity-log:before {
+        font-size: .58rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis
+      }
+
+      .table-container {
+        overflow-x: auto
+      }
+
+      .users-table {
+        min-width: 680px
+      }
+
+      .modal-backdrop {
+        padding: 10px
+      }
+
+      .modal-card {
+        padding: 15px;
+        box-shadow: 5px 5px 0 #111
+      }
+    }
+
+    @media(max-width:380px) {
+      body {
+        padding-left: 6px;
+        padding-right: 6px
+      }
+
+      .brand {
+        font-size: .88rem
+      }
+
+      .dice-buttons-row {
+        gap: 3px
+      }
+
+      .dice-btn {
+        font-size: .82rem
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr
+      }
+
+      .live-turn-indicator {
+        font-size: .82rem
+      }
+    }
   </style>
 </head>
 
@@ -1378,6 +2448,117 @@ button,input{font-family:inherit}
           <span class="badge" id="liveTurnSubBadge" style="background: rgba(255,255,255,0.08);">Realtime Chance</span>
         </div>
 
+        <!-- ================= SMART DICE SUGGESTION SYSTEM PANEL ================= -->
+        <div class="smart-suggestion-panel" id="smartSuggestionPanel">
+          <div class="smart-header">
+            <div class="smart-title-group">
+              <span class="smart-title">🎯 Smart Dice Suggestion System</span>
+              <span class="badge" style="background: rgba(99, 102, 241, 0.18); border-color: rgba(99, 102, 241, 0.4); color: #c7d2fe;">Tactical AI</span>
+            </div>
+            <div id="smartFeasibilityBadge" class="smart-badge-status possible">
+              <span>●</span> <span id="smartStatusText">POSSIBLE</span>
+            </div>
+          </div>
+
+          <!-- Active Player & Consecutive Sixes Status -->
+          <div class="smart-context-bar">
+            <div class="smart-player-picker">
+              <span style="font-size:0.76rem; color:var(--text-muted); font-weight:700;">CURRENT PLAYER:</span>
+              <button type="button" class="player-pill-btn active-blue" id="btn-player-blue" onclick="setSmartActivePlayer('blue')">🔵 Blue</button>
+              <button type="button" class="player-pill-btn" id="btn-player-green" onclick="setSmartActivePlayer('green')">🟢 Green</button>
+              <button type="button" class="player-pill-btn" id="btn-player-red" onclick="setSmartActivePlayer('red')">🔴 Red</button>
+              <button type="button" class="player-pill-btn" id="btn-player-yellow" onclick="setSmartActivePlayer('yellow')">🟡 Yellow</button>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:0.75rem; color:var(--text-muted);">Streak 6s:</span>
+              <span class="badge" id="smartStreakBadge" style="background:rgba(255,255,255,0.06); font-family:'JetBrains Mono',monospace;">0 / 2</span>
+            </div>
+          </div>
+
+          <!-- Objective Selection Tabs -->
+          <div>
+            <div style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-muted); font-weight:700; margin-bottom:6px;">
+              SELECT OBJECTIVE:
+            </div>
+            <div class="objective-tabs">
+              <button type="button" class="obj-tab active" id="tab-cut-opponent" onclick="setSmartObjective('cut-opponent')">
+                <span>⚔️</span> Cut Opponent's Token
+              </button>
+              <button type="button" class="obj-tab" id="tab-protect-my" onclick="setSmartObjective('protect-my')">
+                <span>🛡️</span> Protect My Token
+              </button>
+              <button type="button" class="obj-tab" id="tab-cut-any" onclick="setSmartObjective('cut-any')">
+                <span>🎯</span> Cut Any Opponent
+              </button>
+              <button type="button" class="obj-tab" id="tab-reach-gate" onclick="setSmartObjective('reach-gate')">
+                <span>🏰</span> Reach Safe Gate
+              </button>
+              <button type="button" class="obj-tab" id="tab-custom-target" onclick="setSmartObjective('custom-target')">
+                <span>🔍</span> Custom Target
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Parameter Controls based on selected objective -->
+          <div class="smart-params-row" id="smartParamsRow">
+            <!-- Will be dynamically populated / updated by JS -->
+          </div>
+
+          <!-- Dynamic Suggestion Card (Hero Result) -->
+          <div class="suggestion-hero-card" id="suggestionHeroCard">
+            <div class="hero-info-col">
+              <div class="hero-objective-title" id="heroObjectiveLabel">OBJECTIVE: CUT GREEN'S TOKEN</div>
+              <div class="hero-objective-text" id="heroObjectiveTarget">
+                <span id="heroTargetName">Cut Green Token 2</span>
+              </div>
+              <div class="hero-meta-row">
+                <span>Current Player: <strong id="heroCurrentPlayerText" style="color:#93c5fd;">Blue</strong></span>
+                <span>•</span>
+                <span>Target Pos: <strong id="heroTargetPosText" style="font-family:'JetBrains Mono';">Block 44</strong></span>
+                <span>•</span>
+                <span>Candidate Token: <strong id="heroCandidateTokenText">Blue Token 2</strong></span>
+              </div>
+              <div class="hero-alt-sequence" id="heroAltSequenceRow">
+                <span style="color:#94a3b8;">ALTERNATIVE:</span>
+                <span id="heroAltSequenceText">Token 1: 6 → 5</span>
+              </div>
+              <div class="hero-status-message" id="heroStatusMessage">
+                Blue Token 2 at block 39 requires a 5 to land on block 44 and cut Green Token 2.
+              </div>
+            </div>
+
+            <div class="hero-dice-col">
+              <div class="hero-dice-label">REQUIRED ROLL</div>
+              <div class="hero-dice-display" id="heroDiceDisplay">
+                <span class="dice-pill-big" id="primaryDicePill">5</span>
+              </div>
+              <button type="button" class="btn-queue-suggestion" id="btnQueueSuggestion" onclick="queueSuggestedRoll()">
+                <span>⚡ Queue This Roll</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Collapsible Mini Board & Token Position Inspector -->
+          <div class="smart-board-foldable">
+            <div class="board-fold-header" onclick="toggleBoardInspector()">
+              <span id="boardFoldTitle">📋 Live Board & Token Positions Inspector (Tap to toggle)</span>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" class="btn-secondary" style="padding:2px 8px; font-size:0.7rem;" onclick="event.stopPropagation(); loadDemoScenario();" title="Set sample board for quick test">🧪 Load Demo Scenario</button>
+                <span id="boardFoldArrow">▼</span>
+              </div>
+            </div>
+            <div id="boardInspectorBody" style="display:none;">
+              <div style="font-size:0.74rem; color:var(--text-muted); margin-bottom:4px;">
+                Tokens are synced in real time from the game, or can be clicked to adjust/target:
+              </div>
+              <div class="token-grid-chips" id="tokenGridChips">
+                <!-- Dynamically generated token cards -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
         <!-- Color Rows Grid -->
         <div class="colors-grid">
 
@@ -1475,7 +2656,8 @@ button,input{font-family:inherit}
         <div>
           <label class="form-label">Realtime Activity Log:</label>
           <div class="activity-log" id="activityLog">
-            <div class="log-item"><span class="log-time">[Ready]</span> Select a match to monitor live chances and queue dice.</div>
+            <div class="log-item"><span class="log-time">[Ready]</span> Select a match to monitor live chances and queue
+              dice.</div>
           </div>
         </div>
 
@@ -1682,7 +2864,11 @@ button,input{font-family:inherit}
         checkAuth();
 
       } catch (err) {
-        errorEl.textContent = "Authentication error: " + err.message;
+        if (err.message && (err.message.toLowerCase().includes("permission") || err.code === "PERMISSION_DENIED")) {
+          errorEl.textContent = "Firebase Database Error: Permission Denied. Please enable read/write rules in Firebase Console -> Realtime Database -> Rules.";
+        } else {
+          errorEl.textContent = "Authentication error: " + err.message;
+        }
         errorEl.style.display = "block";
       }
     };
@@ -1917,8 +3103,15 @@ button,input{font-family:inherit}
           renderMatchesList(matchesCache);
         }, error => {
           badgeDot.className = "badge-dot error";
-          badgeText.textContent = "DB Error";
-          logActivity(`Firebase error: ${error.message}`);
+          const isPerm = error.message && (error.message.toLowerCase().includes("permission") || error.code === "PERMISSION_DENIED");
+          if (isPerm) {
+            badgeText.textContent = "Permission Denied";
+            logActivity(`Firebase Rules Locked: Read/write permission denied. Update Firebase RTDB rules to allow access.`);
+            showToast("⚠️ Firebase Permission Denied: Open Firebase Console -> Realtime Database -> Rules and set '.read': true, '.write': true");
+          } else {
+            badgeText.textContent = "DB Error";
+            logActivity(`Firebase error: ${error.message}`);
+          }
         });
 
       } catch (err) {
@@ -2107,6 +3300,10 @@ button,input{font-family:inherit}
       const emojiMap = { red: "🔴", green: "🟢", blue: "🔵", yellow: "🟡" };
       colorName.innerHTML = `${emojiMap[turnColor] || ""} ${turnColor.toUpperCase()}'S TURN TO ROLL`;
 
+      if (colors.includes(turnColor)) {
+        setSmartActivePlayer(turnColor, false);
+      }
+
       colors.forEach(c => {
         const panel = document.getElementById("panel-" + c);
         const badge = document.getElementById("turn-badge-" + c);
@@ -2254,9 +3451,930 @@ button,input{font-family:inherit}
             localQueues[c] = list;
             updateQueueUI(c, list);
           });
+
+          // 4. Update live board state if synced from Android game
+          if (data.board_state) {
+            updateLiveBoardState(data.board_state);
+          } else {
+            recalculateSmartSuggestion();
+          }
         });
       }
     };
+
+    // =========================================================================
+    // SMART DICE SUGGESTION SYSTEM (Tactical Ludo Engine)
+    // =========================================================================
+    const SAFE_SPOTS = [0, 8, 13, 21, 26, 34, 39, 47];
+    const COLOR_STARTS = { green: 39, yellow: 0, red: 26, blue: 13 };
+    const COLOR_ENDS = { green: 37, yellow: 50, red: 24, blue: 11 };
+    const GATE_NAMES = {
+      0: "Gate 0 (Yellow Start)",
+      8: "Gate 8 (Star)",
+      13: "Gate 13 (Blue Start)",
+      21: "Gate 21 (Star)",
+      26: "Gate 26 (Red Start)",
+      34: "Gate 34 (Star)",
+      39: "Gate 39 (Green Start)",
+      47: "Gate 47 (Star)"
+    };
+
+    let smartActivePlayer = "blue";
+    let smartObjective = "cut-opponent"; // 'cut-opponent' | 'protect-my' | 'cut-any' | 'reach-gate' | 'custom-target'
+    let smartSelectedOpponent = "green";
+    let smartSelectedOpponentTokenId = 2; // Token 1..4
+    let smartSelectedMyTokenId = 2; // Token 1..4
+    let smartSelectedGate = 21; // one of SAFE_SPOTS
+    let smartCustomTargetBlock = 44; // 0..51
+
+    let currentSuggestionResult = null;
+
+    // Board state model: 4 tokens per color
+    let boardState = {
+      blue: [
+        { id: 1, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 },
+        { id: 2, isAlive: true, currBlock: 39, numberOfSteps: 26, hasCompleted: false, startPosition: 13, endPosition: 11 },
+        { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 },
+        { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 }
+      ],
+      green: [
+        { id: 1, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 39, endPosition: 37 },
+        { id: 2, isAlive: true, currBlock: 44, numberOfSteps: 5, hasCompleted: false, startPosition: 39, endPosition: 37 },
+        { id: 3, isAlive: true, currBlock: 17, numberOfSteps: 30, hasCompleted: false, startPosition: 39, endPosition: 37 },
+        { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 39, endPosition: 37 }
+      ],
+      red: [
+        { id: 1, isAlive: true, currBlock: 26, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+        { id: 2, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+        { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+        { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 }
+      ],
+      yellow: [
+        { id: 1, isAlive: true, currBlock: 0, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+        { id: 2, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+        { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+        { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 }
+      ]
+    };
+
+    /**
+     * Calculates legal dice sequences to achieve `dist` steps for a given token,
+     * respecting Ludo King rules:
+     * - Rolling a 6 gives another roll
+     * - Consecutive sixes strictly limited: 3rd six in a row is prohibited (turns to 5 in game)
+     * - Tokens in base must first roll 6 to enter startPosition
+     */
+    function calculateLegalSequences(token, dist, playerColor) {
+      const currentStreak = gameConsecutiveSixes[playerColor] || 0;
+      const maxSixes = Math.max(0, 2 - currentStreak);
+      const sequences = [];
+
+      if (!token.isAlive) {
+        // Base token: MUST first roll 6 to emerge onto startPosition
+        if (maxSixes < 1) {
+          // Cannot even roll a 6 because current streak is already 2
+          return [];
+        }
+        const remSixes = maxSixes - 1;
+        if (dist === 0) {
+          // Lands on startPosition with the emerging 6
+          sequences.push([6]);
+        } else if (dist >= 1 && dist <= 5) {
+          // 6 (emerge) -> dist
+          sequences.push([6, dist]);
+        } else if (dist === 6) {
+          if (remSixes >= 1) sequences.push([6, 6]);
+        } else if (dist >= 7 && dist <= 11) {
+          // 6 (emerge) -> 6 (move 6) -> rem (1..5)
+          const rem = dist - 6;
+          if (remSixes >= 1 && rem >= 1 && rem <= 5) {
+            sequences.push([6, 6, rem]);
+          }
+        }
+      } else {
+        // Alive token on common track
+        if (dist <= 0) return [];
+
+        // Single roll (1 to 6)
+        if (dist >= 1 && dist <= 5) {
+          sequences.push([dist]);
+        } else if (dist === 6) {
+          if (maxSixes >= 1) sequences.push([6]);
+        }
+
+        // Two rolls (6 -> X)
+        if (maxSixes >= 1 && dist >= 7 && dist <= 11) {
+          const rem = dist - 6;
+          if (rem >= 1 && rem <= 5) {
+            sequences.push([6, rem]);
+          }
+        } else if (maxSixes >= 2 && dist === 12) {
+          sequences.push([6, 6]);
+        }
+
+        // Three rolls (6 -> 6 -> X, max two sixes followed by 1..5)
+        if (maxSixes >= 2 && dist >= 13 && dist <= 17) {
+          const rem = dist - 12;
+          // 3rd consecutive six is prohibited! Must be 1..5
+          if (rem >= 1 && rem <= 5) {
+            sequences.push([6, 6, rem]);
+          }
+        }
+      }
+
+      // Sort sequences by length (shortest first), then sum
+      sequences.sort((a, b) => a.length - b.length || (a.reduce((s, v) => s + v, 0) - b.reduce((s, v) => s + v, 0)));
+      return sequences;
+    }
+
+    /**
+     * Calculates distance in track steps from token to targetBlock (0..51).
+     * Returns -1 if target is unreachable (e.g. overshoots home stretch or invalid).
+     */
+    function getDistanceToTarget(token, targetBlock) {
+      if (!token) return -1;
+      if (token.hasCompleted) return -1;
+
+      if (!token.isAlive) {
+        const startPos = token.startPosition !== undefined ? token.startPosition : (COLOR_STARTS[token.color || smartActivePlayer] || 0);
+        const dist = (targetBlock - startPos + 52) % 52;
+        if (dist > 50) return -1; // cannot reach without overshooting into home stretch
+        return dist;
+      }
+
+      const curr = token.currBlock;
+      if (curr < 0 || curr > 51) return -1; // in home column or invalid
+
+      const dist = (targetBlock - curr + 52) % 52;
+      if (dist === 0) return 0;
+
+      const stepsMade = token.numberOfSteps || 0;
+      if (stepsMade + dist > 50) {
+        // Token will turn into home stretch before reaching targetBlock!
+        return -1;
+      }
+      return dist;
+    }
+
+    /**
+     * Normalizes and updates live board state received from Android app
+     */
+    function updateLiveBoardState(firebaseBoard) {
+      if (!firebaseBoard) return;
+      colors.forEach(c => {
+        const rawList = firebaseBoard[c];
+        if (Array.isArray(rawList)) {
+          boardState[c] = rawList;
+        } else if (rawList && typeof rawList === "object") {
+          boardState[c] = Object.values(rawList);
+        }
+      });
+      renderTokenInspector();
+      recalculateSmartSuggestion();
+    }
+
+    /**
+     * Set Active Player for Smart Suggestions (e.g. Blue, Green, Red, Yellow)
+     */
+    window.setSmartActivePlayer = function (color, isManual = true) {
+      if (!colors.includes(color)) return;
+      smartActivePlayer = color;
+
+      colors.forEach(c => {
+        const btn = document.getElementById("btn-player-" + c);
+        if (btn) {
+          btn.className = "player-pill-btn" + (c === color ? ` active-${c}` : "");
+        }
+      });
+
+      // Update streak badge
+      const streak = gameConsecutiveSixes[color] || 0;
+      const streakBadge = document.getElementById("smartStreakBadge");
+      if (streakBadge) {
+        streakBadge.textContent = `${streak} / 2`;
+        streakBadge.style.color = streak >= 2 ? "#ef4444" : "#94a3b8";
+      }
+
+      // If current selected opponent is same as active player, choose another opponent
+      if (smartSelectedOpponent === smartActivePlayer) {
+        const otherOpponents = colors.filter(c => c !== smartActivePlayer);
+        smartSelectedOpponent = otherOpponents[0] || "green";
+      }
+
+      renderSmartParams();
+      recalculateSmartSuggestion();
+    };
+
+    /**
+     * Switch Objective Tab
+     */
+    window.setSmartObjective = function (objKey) {
+      smartObjective = objKey;
+      const tabIds = {
+        'cut-opponent': 'tab-cut-opponent',
+        'protect-my': 'tab-protect-my',
+        'cut-any': 'tab-cut-any',
+        'reach-gate': 'tab-reach-gate',
+        'custom-target': 'tab-custom-target'
+      };
+
+      Object.keys(tabIds).forEach(k => {
+        const tabEl = document.getElementById(tabIds[k]);
+        if (tabEl) tabEl.classList.toggle("active", k === objKey);
+      });
+
+      renderSmartParams();
+      recalculateSmartSuggestion();
+    };
+
+    /**
+     * Render the dynamic controls row for the chosen objective
+     */
+    function renderSmartParams() {
+      const container = document.getElementById("smartParamsRow");
+      if (!container) return;
+
+      if (smartObjective === "cut-opponent") {
+        const opponents = colors.filter(c => c !== smartActivePlayer);
+        let oppOptions = opponents.map(c => `<option value="${c}" ${c === smartSelectedOpponent ? 'selected' : ''}>${c.toUpperCase()}</option>`).join("");
+
+        const oppTokens = boardState[smartSelectedOpponent] || [];
+        let tokenOptions = oppTokens.map(t => {
+          let loc = "In Base";
+          if (t.hasCompleted) loc = "Won / Home";
+          else if (t.currBlock >= 0) {
+            const isSafe = SAFE_SPOTS.includes(t.currBlock);
+            loc = `Block ${t.currBlock}${isSafe ? ' ⭐ Safe' : ''}`;
+          }
+          return `<option value="${t.id}" ${t.id === smartSelectedOpponentTokenId ? 'selected' : ''}>Token ${t.id} (${loc})</option>`;
+        }).join("");
+
+        container.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">OPPONENT:</label>
+            <select class="smart-select" id="selectOpponent" onchange="handleSmartParamChange('opponent', this.value)">
+              ${oppOptions}
+            </select>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">TARGET TOKEN:</label>
+            <select class="smart-select" id="selectOpponentToken" onchange="handleSmartParamChange('oppToken', parseInt(this.value))">
+              ${tokenOptions}
+            </select>
+          </div>
+        `;
+      } else if (smartObjective === "protect-my") {
+        const myTokens = boardState[smartActivePlayer] || [];
+        let tokenOptions = myTokens.map(t => {
+          let loc = "In Base";
+          let alertTag = "";
+          if (t.hasCompleted) loc = "Won / Home";
+          else if (t.currBlock >= 0) {
+            const isSafe = SAFE_SPOTS.includes(t.currBlock);
+            loc = `Block ${t.currBlock}`;
+            if (isSafe) loc += " ⭐ Safe";
+            else {
+              // Threat check
+              const threats = getThreatsAgainstBlock(t.currBlock, smartActivePlayer);
+              if (threats.length > 0) alertTag = ` ⚠️ [Threat: ${threats[0].color.toUpperCase()}]`;
+            }
+          }
+          return `<option value="${t.id}" ${t.id === smartSelectedMyTokenId ? 'selected' : ''}>Token ${t.id} (${loc})${alertTag}</option>`;
+        }).join("");
+
+        container.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">TOKEN TO PROTECT:</label>
+            <select class="smart-select" id="selectMyToken" onchange="handleSmartParamChange('myToken', parseInt(this.value))">
+              ${tokenOptions}
+            </select>
+          </div>
+          <span style="font-size:0.74rem; color:var(--text-muted);">
+            Analyzes incoming opponent threats and calculates moves to reach safe gates or safe distance.
+          </span>
+        `;
+      } else if (smartObjective === "cut-any") {
+        container.innerHTML = `
+          <span style="font-size:0.78rem; color:#a5b4fc; display:flex; align-items:center; gap:6px;">
+            <span>🎯</span> Automatically scans all opponents across the board and suggests the fastest / shortest cut opportunity!
+          </span>
+        `;
+      } else if (smartObjective === "reach-gate") {
+        let gateOptions = SAFE_SPOTS.map(g => {
+          return `<option value="${g}" ${g === smartSelectedGate ? 'selected' : ''}>${GATE_NAMES[g] || `Gate ${g}`}</option>`;
+        }).join("");
+
+        container.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">TARGET SAFE GATE:</label>
+            <select class="smart-select" id="selectGate" onchange="handleSmartParamChange('gate', parseInt(this.value))">
+              ${gateOptions}
+            </select>
+          </div>
+          <span style="font-size:0.74rem; color:var(--text-muted);">
+            Calculates which token can legally land on this safe gate.
+          </span>
+        `;
+      } else if (smartObjective === "custom-target") {
+        const isSafe = SAFE_SPOTS.includes(smartCustomTargetBlock);
+        container.innerHTML = `
+          <div style="display:flex; align-items:center; gap:8px;">
+            <label style="font-size:0.75rem; color:var(--text-muted); font-weight:700;">TARGET BLOCK (0-51):</label>
+            <input type="number" min="0" max="51" value="${smartCustomTargetBlock}" class="settings-input" style="width:70px; text-align:center; font-family:'JetBrains Mono';"
+              onchange="handleSmartParamChange('customBlock', parseInt(this.value))" />
+            <span class="badge" style="font-size:0.7rem; background:${isSafe ? 'rgba(16,185,129,0.2)' : 'rgba(255,255,255,0.06)'}; color:${isSafe ? '#34d399' : '#94a3b8'};">
+              ${isSafe ? '⭐ Safe Gate' : 'Common Track'}
+            </span>
+          </div>
+        `;
+      }
+    }
+
+    /**
+     * Handle parameter updates from controls
+     */
+    window.handleSmartParamChange = function (param, val) {
+      if (param === "opponent") {
+        smartSelectedOpponent = val;
+        smartSelectedOpponentTokenId = 1;
+        renderSmartParams();
+      } else if (param === "oppToken") {
+        smartSelectedOpponentTokenId = val;
+      } else if (param === "myToken") {
+        smartSelectedMyTokenId = val;
+      } else if (param === "gate") {
+        smartSelectedGate = val;
+      } else if (param === "customBlock") {
+        smartCustomTargetBlock = Math.max(0, Math.min(51, val || 0));
+      }
+      recalculateSmartSuggestion();
+    };
+
+    /**
+     * Find threats from any opponent against a specific target box (distance 1 to 6 steps behind)
+     */
+    function getThreatsAgainstBlock(block, myColor) {
+      const threats = [];
+      colors.forEach(oppColor => {
+        if (oppColor === myColor) return;
+        const tokens = boardState[oppColor] || [];
+        tokens.forEach(t => {
+          if (t.isAlive && !t.hasCompleted && t.currBlock >= 0 && t.currBlock <= 51) {
+            const dist = (block - t.currBlock + 52) % 52;
+            if (dist >= 1 && dist <= 6) {
+              threats.push({ color: oppColor, token: t, dist: dist, directCutRoll: dist });
+            }
+          }
+        });
+      });
+      threats.sort((a, b) => a.dist - b.dist);
+      return threats;
+    }
+
+    /**
+     * Core Tactical Suggestion Solver
+     */
+    function recalculateSmartSuggestion() {
+      const streak = gameConsecutiveSixes[smartActivePlayer] || 0;
+      const streakBadge = document.getElementById("smartStreakBadge");
+      if (streakBadge) {
+        streakBadge.textContent = `${streak} / 2`;
+        streakBadge.style.color = streak >= 2 ? "#ef4444" : "#94a3b8";
+      }
+
+      let res = {
+        objectiveLabel: "",
+        targetName: "",
+        currentPlayer: smartActivePlayer.toUpperCase(),
+        targetPos: "",
+        candidateToken: "",
+        primaryDiceSequence: [],
+        altSequences: [],
+        isPossible: false,
+        statusMessage: ""
+      };
+
+      const myTokens = boardState[smartActivePlayer] || [];
+
+      // =========================================================================
+      // OBJECTIVE 1: CUT OPPONENT'S TOKEN
+      // =========================================================================
+      if (smartObjective === "cut-opponent") {
+        res.objectiveLabel = `OBJECTIVE: CUT ${smartSelectedOpponent.toUpperCase()}'S TOKEN`;
+        const oppTokens = boardState[smartSelectedOpponent] || [];
+        const oppToken = oppTokens.find(t => t.id === smartSelectedOpponentTokenId) || oppTokens[0];
+
+        if (!oppToken) {
+          res.targetName = `Cut ${smartSelectedOpponent.toUpperCase()} Token ${smartSelectedOpponentTokenId}`;
+          res.isPossible = false;
+          res.statusMessage = "Target token not found on board.";
+        } else if (!oppToken.isAlive) {
+          res.targetName = `Cut ${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id}`;
+          res.targetPos = "In Base Pocket";
+          res.isPossible = false;
+          res.statusMessage = `${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id} is still in Base. It must emerge onto the board before it can be cut.`;
+        } else if (oppToken.hasCompleted) {
+          res.targetName = `Cut ${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id}`;
+          res.targetPos = "Won / Home";
+          res.isPossible = false;
+          res.statusMessage = `${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id} has already completed its purpose and reached Home.`;
+        } else if (SAFE_SPOTS.includes(oppToken.currBlock)) {
+          res.targetName = `Cut ${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id}`;
+          res.targetPos = `Block ${oppToken.currBlock} (⭐ Safe Gate)`;
+          res.isPossible = false;
+          res.statusMessage = `Target is resting on a Safe Gate (${GATE_NAMES[oppToken.currBlock] || `Block ${oppToken.currBlock}`}). Tokens on Safe Gates cannot be legally cut.`;
+        } else {
+          const targetBlock = oppToken.currBlock;
+          res.targetName = `Cut ${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id}`;
+          res.targetPos = `Block ${targetBlock} (Vulnerable)`;
+
+          // Evaluate all my tokens
+          const candidates = [];
+          myTokens.forEach(myT => {
+            const dist = getDistanceToTarget(myT, targetBlock);
+            if (dist >= 0) {
+              const seqs = calculateLegalSequences(myT, dist, smartActivePlayer);
+              if (seqs.length > 0) {
+                candidates.push({ token: myT, dist, seqs });
+              }
+            }
+          });
+
+          if (candidates.length > 0) {
+            candidates.sort((a, b) => a.seqs[0].length - b.seqs[0].length || a.dist - b.dist);
+            const best = candidates[0];
+            res.isPossible = true;
+            res.candidateToken = `${smartActivePlayer.toUpperCase()} Token ${best.token.id}${!best.token.isAlive ? " (From Base)" : ` (Block ${best.token.currBlock})`}`;
+            res.primaryDiceSequence = best.seqs[0];
+
+            // Alternative options
+            const alts = [];
+            if (best.seqs.length > 1) {
+              alts.push(`Token ${best.token.id}: ${best.seqs[1].join(" → ")}`);
+            }
+            candidates.slice(1).forEach(c => {
+              alts.push(`Token ${c.token.id}: ${c.seqs[0].join(" → ")}`);
+            });
+            res.altSequences = alts;
+
+            if (best.token.isAlive) {
+              res.statusMessage = `${smartActivePlayer.toUpperCase()} Token ${best.token.id} at Block ${best.token.currBlock} requires ${best.dist} step${best.dist > 1 ? 's' : ''} to land on Block ${targetBlock} and cut ${smartSelectedOpponent.toUpperCase()} Token ${oppToken.id}.`;
+            } else {
+              res.statusMessage = `${smartActivePlayer.toUpperCase()} Token ${best.token.id} in Base needs to emerge (6) and advance ${best.dist} steps to cut target.`;
+            }
+          } else {
+            res.isPossible = false;
+            res.candidateToken = "None in range";
+            res.statusMessage = `No ${smartActivePlayer.toUpperCase()} token can legally reach Block ${targetBlock} this turn (tokens have either passed this block or consecutive six rules limit movement).`;
+          }
+        }
+      }
+
+      // =========================================================================
+      // OBJECTIVE 2: PROTECT MY TOKEN
+      // =========================================================================
+      else if (smartObjective === "protect-my") {
+        res.objectiveLabel = `OBJECTIVE: PROTECT ${smartActivePlayer.toUpperCase()}'S TOKEN`;
+        const myT = myTokens.find(t => t.id === smartSelectedMyTokenId) || myTokens[0];
+
+        if (!myT) {
+          res.targetName = `Protect Token ${smartSelectedMyTokenId}`;
+          res.isPossible = false;
+          res.statusMessage = "Token not found.";
+        } else if (!myT.isAlive) {
+          res.targetName = `Protect Token ${myT.id}`;
+          res.targetPos = "In Base Pocket";
+          res.isPossible = true;
+          res.candidateToken = `Token ${myT.id}`;
+          res.statusMessage = `Token ${myT.id} is in Base Pocket and is completely immune to opponent cuts.`;
+        } else if (myT.hasCompleted) {
+          res.targetName = `Protect Token ${myT.id}`;
+          res.targetPos = "Won / Home";
+          res.isPossible = true;
+          res.candidateToken = `Token ${myT.id}`;
+          res.statusMessage = `Token ${myT.id} has finished and is permanently safe in Home.`;
+        } else if (SAFE_SPOTS.includes(myT.currBlock)) {
+          res.targetName = `Protect Token ${myT.id}`;
+          res.targetPos = `Block ${myT.currBlock} (⭐ Safe Gate)`;
+          res.isPossible = true;
+          res.candidateToken = `Token ${myT.id}`;
+          res.statusMessage = `Token ${myT.id} is already stationed safely on ${GATE_NAMES[myT.currBlock] || `Gate ${myT.currBlock}`}. No opponent can cut it here!`;
+        } else {
+          // Check for threats behind my token
+          const threats = getThreatsAgainstBlock(myT.currBlock, smartActivePlayer);
+          res.targetName = `Protect Token ${myT.id}`;
+          res.targetPos = `Block ${myT.currBlock} (Vulnerable)`;
+          res.candidateToken = `Token ${myT.id}`;
+
+          // Find protection moves:
+          // 1. Move to nearest safe gate ahead
+          const gatesAhead = SAFE_SPOTS.map(g => {
+            const dist = (g - myT.currBlock + 52) % 52;
+            return { gate: g, dist };
+          }).filter(x => x.dist > 0 && (myT.numberOfSteps + x.dist <= 50));
+          gatesAhead.sort((a, b) => a.dist - b.dist);
+
+          const safeMoves = [];
+          gatesAhead.forEach(g => {
+            const seqs = calculateLegalSequences(myT, g.dist, smartActivePlayer);
+            if (seqs.length > 0) {
+              safeMoves.push({ type: 'gate', gate: g.gate, dist: g.dist, seq: seqs[0] });
+            }
+          });
+
+          // 2. Or enter home stretch (> 50 steps)
+          const stepsToHome = 51 - (myT.numberOfSteps || 0);
+          if (stepsToHome >= 1 && stepsToHome <= 6) {
+            const seqs = calculateLegalSequences(myT, stepsToHome, smartActivePlayer);
+            if (seqs.length > 0) {
+              safeMoves.push({ type: 'home', dist: stepsToHome, seq: seqs[0] });
+            }
+          }
+
+          if (threats.length > 0) {
+            const primaryThreat = threats[0];
+            if (safeMoves.length > 0) {
+              const bestMove = safeMoves[0];
+              res.isPossible = true;
+              res.primaryDiceSequence = bestMove.seq;
+              res.altSequences = safeMoves.slice(1).map(m => m.type === 'home' ? `Enter Home Stretch: ${m.seq.join(" → ")}` : `Reach Gate ${m.gate}: ${m.seq.join(" → ")}`);
+
+              if (bestMove.type === 'home') {
+                res.statusMessage = `⚠️ Immediate Threat: ${primaryThreat.color.toUpperCase()} Token ${primaryThreat.token.id} is ${primaryThreat.dist} steps behind! Roll ${bestMove.seq.join(" → ")} to escape directly into your protected Home Stretch!`;
+              } else {
+                res.statusMessage = `⚠️ Immediate Threat: ${primaryThreat.color.toUpperCase()} Token ${primaryThreat.token.id} is ${primaryThreat.dist} steps behind! Roll ${bestMove.seq.join(" → ")} to reach ${GATE_NAMES[bestMove.gate] || `Gate ${bestMove.gate}`} and guarantee safety.`;
+              }
+            } else {
+              // Roll any safe roll > threat's reach or advance
+              const escapeRoll = Math.min(6, (7 - primaryThreat.dist) + 2);
+              const escapeSeq = calculateLegalSequences(myT, escapeRoll, smartActivePlayer);
+              if (escapeSeq.length > 0) {
+                res.isPossible = true;
+                res.primaryDiceSequence = escapeSeq[0];
+                res.statusMessage = `Threatened by ${primaryThreat.color.toUpperCase()} Token ${primaryThreat.token.id} (${primaryThreat.dist} behind). Roll ${escapeSeq[0].join(" → ")} to sprint forward and break the opponent's direct 1-roll strike range.`;
+              } else {
+                res.isPossible = false;
+                res.statusMessage = `Token is cornered! No legal escape sequence available this turn under consecutive six limits.`;
+              }
+            }
+          } else {
+            // No immediate threats, recommend nearest safe gate
+            if (safeMoves.length > 0) {
+              const bestMove = safeMoves[0];
+              res.isPossible = true;
+              res.primaryDiceSequence = bestMove.seq;
+              res.altSequences = safeMoves.slice(1).map(m => `Gate ${m.gate}: ${m.seq.join(" → ")}`);
+              res.statusMessage = `No immediate threats within 6 steps. Advance to ${GATE_NAMES[bestMove.gate] || `Gate ${bestMove.gate}`} with ${bestMove.seq.join(" → ")} to secure board position.`;
+            } else {
+              res.isPossible = false;
+              res.statusMessage = `Token is safe for now. No reachable gate ahead before turning into home stretch.`;
+            }
+          }
+        }
+      }
+
+      // =========================================================================
+      // OBJECTIVE 3: CUT ANY OPPONENT
+      // =========================================================================
+      else if (smartObjective === "cut-any") {
+        res.objectiveLabel = "OBJECTIVE: CUT ANY OPPONENT";
+        const allCutOpportunities = [];
+
+        colors.forEach(oppColor => {
+          if (oppColor === smartActivePlayer) return;
+          const oppTokens = boardState[oppColor] || [];
+          oppTokens.forEach(oppT => {
+            if (oppT.isAlive && !oppT.hasCompleted && oppT.currBlock >= 0 && !SAFE_SPOTS.includes(oppT.currBlock)) {
+              myTokens.forEach(myT => {
+                const dist = getDistanceToTarget(myT, oppT.currBlock);
+                if (dist >= 0) {
+                  const seqs = calculateLegalSequences(myT, dist, smartActivePlayer);
+                  if (seqs.length > 0) {
+                    allCutOpportunities.push({
+                      oppColor,
+                      oppToken: oppT,
+                      myToken: myT,
+                      dist,
+                      seq: seqs[0]
+                    });
+                  }
+                }
+              });
+            }
+          });
+        });
+
+        if (allCutOpportunities.length > 0) {
+          // Sort by easiest/shortest sequence length, then lowest distance
+          allCutOpportunities.sort((a, b) => a.seq.length - b.seq.length || a.dist - b.dist);
+          const top = allCutOpportunities[0];
+
+          res.isPossible = true;
+          res.targetName = `Cut ${top.oppColor.toUpperCase()} Token ${top.oppToken.id}`;
+          res.targetPos = `Block ${top.oppToken.currBlock} (Vulnerable)`;
+          res.candidateToken = `${smartActivePlayer.toUpperCase()} Token ${top.myToken.id}${!top.myToken.isAlive ? " (From Base)" : ` (Block ${top.myToken.currBlock})`}`;
+          res.primaryDiceSequence = top.seq;
+
+          res.altSequences = allCutOpportunities.slice(1, 4).map(o => {
+            return `Cut ${o.oppColor.toUpperCase()} T${o.oppToken.id} (T${o.myToken.id}): ${o.seq.join(" → ")}`;
+          });
+
+          res.statusMessage = `Target identified! ${top.oppColor.toUpperCase()} Token ${top.oppToken.id} is open at Block ${top.oppToken.currBlock}. Rolling ${top.seq.join(" → ")} executes the cut and earns an extra turn!`;
+        } else {
+          res.isPossible = false;
+          res.targetName = "No Vulnerable Opponents";
+          res.targetPos = "Board Scanned";
+          res.candidateToken = "None Available";
+          res.statusMessage = "All opponent tokens on the board are currently protected on Safe Gates, inside Base, or out of legal striking distance this turn.";
+        }
+      }
+
+      // =========================================================================
+      // OBJECTIVE 4: REACH A SPECIFIC GATE
+      // =========================================================================
+      else if (smartObjective === "reach-gate") {
+        const gate = smartSelectedGate;
+        res.objectiveLabel = `OBJECTIVE: REACH ${GATE_NAMES[gate] || `GATE ${gate}`}`;
+        res.targetName = `${GATE_NAMES[gate] || `Gate ${gate}`}`;
+        res.targetPos = `Block ${gate} (⭐ Safe Gate)`;
+
+        const candidates = [];
+        myTokens.forEach(myT => {
+          const dist = getDistanceToTarget(myT, gate);
+          if (dist >= 0) {
+            const seqs = calculateLegalSequences(myT, dist, smartActivePlayer);
+            if (seqs.length > 0) {
+              candidates.push({ token: myT, dist, seqs });
+            }
+          }
+        });
+
+        if (candidates.length > 0) {
+          candidates.sort((a, b) => a.seqs[0].length - b.seqs[0].length || a.dist - b.dist);
+          const best = candidates[0];
+          res.isPossible = true;
+          res.candidateToken = `${smartActivePlayer.toUpperCase()} Token ${best.token.id}${!best.token.isAlive ? " (From Base)" : ` (Block ${best.token.currBlock})`}`;
+          res.primaryDiceSequence = best.seqs[0];
+          res.altSequences = candidates.slice(1).map(c => `Token ${c.token.id}: ${c.seqs[0].join(" → ")}`);
+          res.statusMessage = `${smartActivePlayer.toUpperCase()} Token ${best.token.id} can land directly on Safe Gate ${gate} by rolling ${best.seqs[0].join(" → ")}.`;
+        } else {
+          res.isPossible = false;
+          res.candidateToken = "None in reach";
+          res.statusMessage = `None of your tokens can reach Gate ${gate} this turn without overshooting their home stretch or exceeding legal roll sequences.`;
+        }
+      }
+
+      // =========================================================================
+      // OBJECTIVE 5: CUSTOM TARGET BLOCK
+      // =========================================================================
+      else if (smartObjective === "custom-target") {
+        const blk = smartCustomTargetBlock;
+        const isSafe = SAFE_SPOTS.includes(blk);
+        res.objectiveLabel = `OBJECTIVE: REACH CUSTOM BLOCK ${blk}`;
+        res.targetName = `Reach Track Block ${blk}`;
+        res.targetPos = `Block ${blk}${isSafe ? ' (⭐ Safe Gate)' : ''}`;
+
+        const candidates = [];
+        myTokens.forEach(myT => {
+          const dist = getDistanceToTarget(myT, blk);
+          if (dist >= 0) {
+            const seqs = calculateLegalSequences(myT, dist, smartActivePlayer);
+            if (seqs.length > 0) {
+              candidates.push({ token: myT, dist, seqs });
+            }
+          }
+        });
+
+        if (candidates.length > 0) {
+          candidates.sort((a, b) => a.seqs[0].length - b.seqs[0].length || a.dist - b.dist);
+          const best = candidates[0];
+          res.isPossible = true;
+          res.candidateToken = `${smartActivePlayer.toUpperCase()} Token ${best.token.id}${!best.token.isAlive ? " (From Base)" : ` (Block ${best.token.currBlock})`}`;
+          res.primaryDiceSequence = best.seqs[0];
+          res.altSequences = candidates.slice(1).map(c => `Token ${c.token.id}: ${c.seqs[0].join(" → ")}`);
+          res.statusMessage = `${smartActivePlayer.toUpperCase()} Token ${best.token.id} needs ${best.dist} step${best.dist > 1 ? 's' : ''} to reach Block ${blk}. Required roll: ${best.seqs[0].join(" → ")}.`;
+        } else {
+          res.isPossible = false;
+          res.candidateToken = "None in reach";
+          res.statusMessage = `Cannot reach Block ${blk} legally this turn with any ${smartActivePlayer.toUpperCase()} token.`;
+        }
+      }
+
+      currentSuggestionResult = res;
+      renderSuggestionResult(res);
+    }
+
+    /**
+     * Update the hero suggestion card UI
+     */
+    function renderSuggestionResult(res) {
+      const badge = document.getElementById("smartFeasibilityBadge");
+      const statusText = document.getElementById("smartStatusText");
+      const objLabel = document.getElementById("heroObjectiveLabel");
+      const targetName = document.getElementById("heroTargetName");
+      const playerText = document.getElementById("heroCurrentPlayerText");
+      const targetPosText = document.getElementById("heroTargetPosText");
+      const candidateText = document.getElementById("heroCandidateTokenText");
+      const altSeqRow = document.getElementById("heroAltSequenceRow");
+      const altSeqText = document.getElementById("heroAltSequenceText");
+      const statusMsg = document.getElementById("heroStatusMessage");
+      const diceDisplay = document.getElementById("heroDiceDisplay");
+      const btnQueue = document.getElementById("btnQueueSuggestion");
+
+      if (badge && statusText) {
+        badge.className = `smart-badge-status ${res.isPossible ? "possible" : "impossible"}`;
+        statusText.textContent = res.isPossible ? "POSSIBLE" : "NO VALID SEQUENCE";
+      }
+
+      if (objLabel) objLabel.textContent = res.objectiveLabel;
+      if (targetName) targetName.textContent = res.targetName;
+      if (playerText) {
+        playerText.textContent = res.currentPlayer;
+        const colorVarMap = { BLUE: "#93c5fd", RED: "#fca5a5", GREEN: "#6ee7b7", YELLOW: "#fde047" };
+        playerText.style.color = colorVarMap[res.currentPlayer] || "#93c5fd";
+      }
+      if (targetPosText) targetPosText.textContent = res.targetPos || "N/A";
+      if (candidateText) candidateText.textContent = res.candidateToken || "None";
+      if (statusMsg) statusMsg.textContent = res.statusMessage;
+
+      if (altSeqRow && altSeqText) {
+        if (res.altSequences && res.altSequences.length > 0) {
+          altSeqRow.style.display = "flex";
+          altSeqText.textContent = res.altSequences.join("  |  ");
+        } else {
+          altSeqRow.style.display = "none";
+        }
+      }
+
+      // Dice display
+      if (diceDisplay) {
+        if (res.isPossible && res.primaryDiceSequence.length > 0) {
+          diceDisplay.innerHTML = res.primaryDiceSequence.map((val, idx) => {
+            const isLast = idx === res.primaryDiceSequence.length - 1;
+            return `<span class="dice-pill-big">${val}</span>` + (!isLast ? `<span class="dice-seq-arrow">→</span>` : "");
+          }).join("");
+        } else {
+          diceDisplay.innerHTML = `<span class="dice-pill-big empty">NO SEQUENCE</span>`;
+        }
+      }
+
+      if (btnQueue) {
+        const hasSeq = res.isPossible && res.primaryDiceSequence.length > 0;
+        btnQueue.disabled = !hasSeq;
+        if (hasSeq) {
+          btnQueue.innerHTML = `<span>⚡ Queue Roll (${res.primaryDiceSequence.join(" → ")})</span>`;
+        } else {
+          btnQueue.innerHTML = `<span>⚡ Queue Roll</span>`;
+        }
+      }
+    }
+
+    /**
+     * Action: Human controller clicks to queue the suggested sequence
+     */
+    window.queueSuggestedRoll = function () {
+      if (!currentSuggestionResult || !currentSuggestionResult.isPossible) return;
+      const seq = currentSuggestionResult.primaryDiceSequence;
+      if (!seq || seq.length === 0) return;
+
+      if (!currentMatchNumber) {
+        showToast("Please select or enter an active match number first!");
+        return;
+      }
+
+      // Add each number to existing controller queue
+      seq.forEach(val => {
+        handleDiceClick(smartActivePlayer, val);
+      });
+
+      showToast(`🎯 Smart Suggestion Applied: Queued [${seq.join(" → ")}] for ${smartActivePlayer.toUpperCase()}!`);
+      logActivity(`Queued suggested sequence [${seq.join(" → ")}] for ${smartActivePlayer.toUpperCase()} to achieve objective: "${currentSuggestionResult.targetName}"`, true);
+    };
+
+    /**
+     * Toggle Collapsible Mini Board & Token Position Inspector
+     */
+    window.toggleBoardInspector = function () {
+      const body = document.getElementById("boardInspectorBody");
+      const arrow = document.getElementById("boardFoldArrow");
+      if (!body) return;
+      const isHidden = body.style.display === "none";
+      body.style.display = isHidden ? "block" : "none";
+      if (arrow) arrow.textContent = isHidden ? "▲" : "▼";
+      if (isHidden) {
+        renderTokenInspector();
+      }
+    };
+
+    /**
+     * Render the tokens of all 4 players inside the inspector
+     */
+    function renderTokenInspector() {
+      const grid = document.getElementById("tokenGridChips");
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const emojiMap = { blue: "🔵", green: "🟢", red: "🔴", yellow: "🟡" };
+
+      colors.forEach(c => {
+        const tokens = boardState[c] || [];
+        tokens.forEach(t => {
+          let posLabel = "Base";
+          let badgeStyle = "color:#64748b;";
+          if (t.hasCompleted) {
+            posLabel = "Home 🏁";
+            badgeStyle = "color:#facc15;";
+          } else if (t.currBlock >= 0 && t.currBlock <= 51) {
+            const isSafe = SAFE_SPOTS.includes(t.currBlock);
+            posLabel = `Block ${t.currBlock}${isSafe ? ' ⭐' : ''}`;
+            badgeStyle = isSafe ? "color:#34d399;" : "color:#f8fafc;";
+          }
+
+          const isTarget = (smartObjective === "cut-opponent" && c === smartSelectedOpponent && t.id === smartSelectedOpponentTokenId);
+
+          const chip = document.createElement("div");
+          chip.className = `token-chip-card ${isTarget ? 'selected-target' : ''}`;
+          chip.onclick = () => selectTokenFromInspector(c, t.id);
+          chip.title = `Click to set as target or active token`;
+          chip.innerHTML = `
+            <span>${emojiMap[c] || ""} <strong>${c.toUpperCase()} ${t.id}</strong></span>
+            <span style="font-family:'JetBrains Mono'; font-weight:700; ${badgeStyle}">${posLabel}</span>
+          `;
+          grid.appendChild(chip);
+        });
+      });
+    }
+
+    /**
+     * Fast-select token by clicking its card in the inspector
+     */
+    window.selectTokenFromInspector = function (color, tokenId) {
+      if (color === smartActivePlayer) {
+        // Set as "Protect My Token"
+        smartSelectedMyTokenId = tokenId;
+        setSmartObjective("protect-my");
+      } else {
+        // Set as "Cut Opponent's Token"
+        smartSelectedOpponent = color;
+        smartSelectedOpponentTokenId = tokenId;
+        setSmartObjective("cut-opponent");
+      }
+      renderSmartParams();
+      recalculateSmartSuggestion();
+      showToast(`Selected ${color.toUpperCase()} Token ${tokenId} as tactical target.`);
+    };
+
+    /**
+     * Load an instant demo board scenario for testing
+     */
+    window.loadDemoScenario = function () {
+      boardState = {
+        blue: [
+          { id: 1, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 },
+          { id: 2, isAlive: true, currBlock: 39, numberOfSteps: 26, hasCompleted: false, startPosition: 13, endPosition: 11 },
+          { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 },
+          { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 13, endPosition: 11 }
+        ],
+        green: [
+          { id: 1, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 39, endPosition: 37 },
+          { id: 2, isAlive: true, currBlock: 44, numberOfSteps: 5, hasCompleted: false, startPosition: 39, endPosition: 37 },
+          { id: 3, isAlive: true, currBlock: 17, numberOfSteps: 30, hasCompleted: false, startPosition: 39, endPosition: 37 },
+          { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 39, endPosition: 37 }
+        ],
+        red: [
+          { id: 1, isAlive: true, currBlock: 26, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+          { id: 2, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+          { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 },
+          { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 26, endPosition: 24 }
+        ],
+        yellow: [
+          { id: 1, isAlive: true, currBlock: 0, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+          { id: 2, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+          { id: 3, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 },
+          { id: 4, isAlive: false, currBlock: -1, numberOfSteps: 0, hasCompleted: false, startPosition: 0, endPosition: 50 }
+        ]
+      };
+
+      smartActivePlayer = "blue";
+      smartObjective = "cut-opponent";
+      smartSelectedOpponent = "green";
+      smartSelectedOpponentTokenId = 2;
+
+      setSmartActivePlayer("blue", true);
+      setSmartObjective("cut-opponent");
+      renderTokenInspector();
+      showToast("🧪 Loaded Demo Scenario: Green Token 2 at Block 44, Blue Token 2 at Block 39 (Cut in 5 steps!)");
+      logActivity("Loaded tactical demo scenario: Green Token 2 at Block 44, Blue Token 2 at Block 39.", true);
+    };
+
+    /**
+     * Initialize the suggestion system on startup
+     */
+    function initSmartSuggestionSystem() {
+      renderSmartParams();
+      renderTokenInspector();
+      recalculateSmartSuggestion();
+    }
 
     function logActivity(msg, isSuccess = false) {
       const log = document.getElementById("activityLog");
@@ -2271,6 +4389,7 @@ button,input{font-family:inherit}
 
     function initDashboard() {
       buildDiceButtons();
+      initSmartSuggestionSystem();
       const defaultUrl = getDefaultDbUrl();
       document.getElementById("dbUrlInput").value = defaultUrl;
       connectFirebase(defaultUrl);
