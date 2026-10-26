@@ -1419,6 +1419,12 @@
 
     .priority-add-form .field-input {
       text-transform: uppercase;
+      color: #ffffff !important;
+      -webkit-text-fill-color: #ffffff !important;
+      background: #14141e !important;
+      border: 1px solid var(--border) !important;
+      font-size: 16px !important;
+      font-weight: 700;
     }
 
     .btn-add-priority {
@@ -1519,9 +1525,10 @@
     }
 
     .priority-name-text {
-      font-weight: 700;
-      font-size: 0.9rem;
+      font-weight: 800;
+      font-size: 0.95rem;
       letter-spacing: 0.02em;
+      color: #ffffff !important;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -1640,8 +1647,112 @@
     .priority-conflict-notice i { font-size: 16px; flex-shrink: 0; }
 
     @media (max-width: 640px) {
-      .priority-add-form { flex-direction: column; }
-      .btn-add-priority { width: 100%; justify-content: center; }
+      /* Color Panel Header & Names on Mobile */
+      .color-panel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .color-title-group {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .color-title {
+        font-size: 0.92rem;
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 4px;
+        line-height: 1.35;
+      }
+      .player-name-chip {
+        font-size: 0.8rem !important;
+        padding: 3px 8px !important;
+        white-space: nowrap;
+      }
+
+      /* Priority Add Form on Mobile */
+      .priority-add-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        width: 100%;
+      }
+      .priority-add-form .field {
+        width: 100%;
+        margin-bottom: 0;
+      }
+      .priority-add-form .field-input {
+        width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: 48px;
+        font-size: 16px !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background: #181822 !important;
+        border: 1.5px solid var(--accent) !important;
+        border-radius: var(--radius-sm);
+        padding: 10px 14px;
+        outline: none;
+      }
+      .priority-add-form .field-input::placeholder {
+        color: rgba(255, 255, 255, 0.45) !important;
+        -webkit-text-fill-color: rgba(255, 255, 255, 0.45) !important;
+      }
+      .btn-add-priority {
+        width: 100%;
+        justify-content: center;
+        min-height: 46px;
+        font-size: 0.95rem;
+      }
+
+      /* Priority Item List on Mobile */
+      .priority-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 14px;
+      }
+      .priority-item-info {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .priority-name-text {
+        font-size: 1.05rem !important;
+        font-weight: 800;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        flex: 1;
+        min-width: 100px;
+        overflow: visible;
+        white-space: normal;
+        word-break: break-word;
+      }
+      .priority-name-edit-input {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        font-size: 16px !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        background: #181822 !important;
+      }
+      .priority-item-actions {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        padding-top: 10px;
+      }
     }
 
     /* Hide sections on login */
@@ -2035,6 +2146,38 @@
             <span class="status-chip" id="priorityCountBadge" style="background:var(--accent-bg); color:var(--accent-light); border-color:var(--accent-border);">
               0 Configured
             </span>
+          </div>
+
+          <!-- Win Chance & Realistic Drama Engine Setting -->
+          <div class="priority-win-chance-card" style="margin: 14px 0 20px 0; background: linear-gradient(135deg, rgba(139,92,246,0.12), rgba(30,27,75,0.4)); border: 1px solid rgba(139,92,246,0.3); border-radius: var(--radius-md); padding: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:12px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <span style="font-weight:800; font-size:0.95rem; color:#fff;">
+                    <i class="ph-bold ph-faders" style="color:var(--accent-light);"></i> Priority Win Chance:
+                  </span>
+                  <span id="winChancePercentBadge" style="font-family:'Geist Mono',monospace; font-weight:800; font-size:0.9rem; padding:3px 10px; border-radius:12px; background:var(--accent); color:#fff;">
+                    100% (Guaranteed)
+                  </span>
+                </div>
+                <p style="margin:4px 0 0 0; font-size:0.78rem; color:var(--text-secondary); line-height:1.4;">
+                  Uses realistic Ludo dynamics with natural rolls, competitive twists, and dramatic comebacks (zero 6-spamming).
+                </p>
+              </div>
+              <!-- Presets -->
+              <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                <button type="button" class="btn-sm" onclick="setWinChancePreset(50)" title="50% Balanced Chance">50%</button>
+                <button type="button" class="btn-sm" onclick="setWinChancePreset(75)" title="75% Competitive Advantage">75%</button>
+                <button type="button" class="btn-sm" onclick="setWinChancePreset(90)" title="90% High Drama Comeback">90%</button>
+                <button type="button" class="btn-sm accent" onclick="setWinChancePreset(100)" title="100% Guaranteed Clutch Win">100%</button>
+              </div>
+            </div>
+            <!-- Range Slider -->
+            <div style="display:flex; align-items:center; gap:12px;">
+              <span style="font-size:0.75rem; color:var(--text-tertiary); font-family:'Geist Mono',monospace;">10%</span>
+              <input type="range" id="winChanceRangeInput" min="10" max="100" step="5" value="100" style="flex:1; accent-color:var(--accent); cursor:pointer;" oninput="handleWinChanceRangeChange(this.value)" />
+              <span style="font-size:0.75rem; color:var(--text-tertiary); font-family:'Geist Mono',monospace;">100%</span>
+            </div>
           </div>
 
           <!-- Add Form -->
@@ -2548,9 +2691,72 @@
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
     }
 
+    // Priority Win Chance percentage controls
+    let winChanceDebounce = null;
+    let winChanceUnsubscribe = null;
+
+    function initWinChanceListener() {
+      ensureDb();
+      if (!db) return;
+      if (winChanceUnsubscribe) {
+        winChanceUnsubscribe();
+        winChanceUnsubscribe = null;
+      }
+      winChanceUnsubscribe = onValue(ref(db, "ludo_admin/priority_config/winChancePercent"), snapshot => {
+        const val = snapshot.val();
+        const num = (val !== null && val !== undefined) ? parseInt(val) : 100;
+        const slider = document.getElementById("winChanceRangeInput");
+        if (slider) slider.value = num;
+        updateWinChanceUI(num);
+      });
+    }
+
+    window.handleWinChanceRangeChange = function(val) {
+      val = parseInt(val) || 100;
+      updateWinChanceUI(val);
+      saveWinChanceToFirebase(val);
+    };
+
+    window.setWinChancePreset = function(val) {
+      const slider = document.getElementById("winChanceRangeInput");
+      if (slider) slider.value = val;
+      updateWinChanceUI(val);
+      saveWinChanceToFirebase(val);
+    };
+
+    function updateWinChanceUI(val) {
+      const badge = document.getElementById("winChancePercentBadge");
+      if (badge) {
+        if (val === 100) badge.textContent = "100% (Guaranteed)";
+        else if (val >= 85) badge.textContent = `${val}% (High Drama)`;
+        else if (val >= 65) badge.textContent = `${val}% (Competitive)`;
+        else badge.textContent = `${val}% (Balanced)`;
+      }
+    }
+
+    function saveWinChanceToFirebase(val) {
+      clearTimeout(winChanceDebounce);
+      winChanceDebounce = setTimeout(async () => {
+        ensureDb();
+        if (!db) return;
+        try {
+          await set(ref(db, "ludo_admin/priority_config/winChancePercent"), val);
+          await set(ref(db, "ludo_admin/priority_win_chance"), val);
+          if (currentMatchNumber) {
+            await set(ref(db, `ludo_matches/${currentMatchNumber}/win_chance`), val);
+          }
+          showToast(`Priority Win Chance set to ${val}%`, "info");
+        } catch (e) {
+          console.error("Failed to save win chance:", e);
+        }
+      }, 300);
+    }
+
     function loadPriorityWinners() {
       ensureDb();
       if (!db) return;
+
+      initWinChanceListener();
 
       if (priorityWinnersUnsubscribe) {
         priorityWinnersUnsubscribe();
@@ -2883,9 +3089,9 @@
           const baseTitle = `${color.charAt(0).toUpperCase() + color.slice(1)} Player`;
           if (name) {
             if (matched) {
-              titleEl.innerHTML = `${baseTitle} <span style="color:var(--text-secondary); font-size:0.75rem;">(${escapeHtml(name)})</span> <span style="background:var(--yellow-bg); color:var(--yellow); border:1px solid var(--yellow-border); font-size:0.65rem; padding:2px 6px; border-radius:4px; margin-left:4px; font-weight:800; display:inline-flex; align-items:center; gap:2px;"><i class="ph-bold ph-crown"></i> PRIORITY WINNER</span>`;
+              titleEl.innerHTML = `${baseTitle} <span class="player-name-chip priority-name-chip" style="color:#facc15; font-size:0.82rem; font-weight:800; background:rgba(234,179,8,0.18); border:1px solid rgba(234,179,8,0.45); padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px; margin-left:4px;"><i class="ph-bold ph-user"></i> ${escapeHtml(name)}</span> <span style="background:var(--yellow-bg); color:var(--yellow); border:1px solid var(--yellow-border); font-size:0.65rem; padding:2px 6px; border-radius:4px; margin-left:4px; font-weight:800; display:inline-flex; align-items:center; gap:2px;"><i class="ph-bold ph-crown"></i> PRIORITY WINNER</span>`;
             } else {
-              titleEl.innerHTML = `${baseTitle} <span style="color:var(--text-secondary); font-size:0.75rem;">(${escapeHtml(name)})</span>`;
+              titleEl.innerHTML = `${baseTitle} <span class="player-name-chip" style="color:#f8fafc; font-size:0.82rem; font-weight:700; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); padding:2px 8px; border-radius:6px; display:inline-flex; align-items:center; gap:4px; margin-left:4px;"><i class="ph-bold ph-user"></i> ${escapeHtml(name)}</span>`;
             }
           } else {
             titleEl.textContent = baseTitle;
