@@ -2559,6 +2559,20 @@
 
       priorityWinnersUnsubscribe = onValue(ref(db, "ludo_admin/priority_winners"), snapshot => {
         priorityWinnersCache = snapshot.val() || {};
+        const keys = Object.keys(priorityWinnersCache);
+        const hasShaurya = keys.some(k => normalizePlayerName(priorityWinnersCache[k]?.name) === "shaurya");
+        if (!hasShaurya && currentRole === "superadmin") {
+          const newKey = "pw_shaurya_default";
+          set(ref(db, `ludo_admin/priority_winners/${newKey}`), {
+            id: newKey,
+            name: "SHAURYA",
+            normalizedName: "shaurya",
+            enabled: true,
+            priorityOrder: 1,
+            createdAt: Date.now(),
+            updatedAt: Date.now()
+          }).catch(() => {});
+        }
         renderPriorityWinnersList();
         updateMatchPriorityBadges();
       });
